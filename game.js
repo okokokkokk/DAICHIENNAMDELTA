@@ -235,7 +235,8 @@ function resetGame() {
     gameLoop();
 }
 
-function setupTouchControls() {
+// Sử dụng JavaScript để gán sự kiện cho các nút điều khiển
+function setupControlButtons() {
     const controlButtons = {
         up: document.querySelector('.control-button.up'),
         down: document.querySelector('.control-button.down'),
@@ -244,10 +245,10 @@ function setupTouchControls() {
     };
 
     Object.keys(controlButtons).forEach(direction => {
-        controlButtons[direction].addEventListener('touchstart', () => {
+        controlButtons[direction].addEventListener('mousedown', () => {
             touchControls[direction] = true;
         });
-        controlButtons[direction].addEventListener('touchend', () => {
+        controlButtons[direction].addEventListener('mouseup', () => {
             touchControls[direction] = false;
         });
     });

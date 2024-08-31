@@ -62,6 +62,7 @@ canvas {
     color: #000;
     text-align: center;
     cursor: pointer;
+    outline: none; /* Loại bỏ đường viền mặc định của nút */
 }
 
 .control-button.up {
@@ -94,6 +95,7 @@ canvas {
     cursor: pointer;
     z-index: 10;
     position: fixed; /* Đảm bảo nút luôn hiển thị trên màn hình */
+    outline: none; /* Loại bỏ đường viền mặc định của nút */
 }
 
 #attackButton:active {
@@ -120,6 +122,7 @@ canvas {
     cursor: pointer;
     width: 150px;
     text-align: center;
+    outline: none; /* Loại bỏ đường viền mặc định của nút */
 }
 
 .play-again-button {
