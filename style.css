@@ -1,13 +1,16 @@
+/* Đặt lại kiểu mặc định */
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
     background: #000;
 }
+
 canvas {
     display: block;
     margin: 0 auto;
 }
+
 .win-screen, .game-over-screen {
     position: absolute;
     top: 0;
@@ -16,31 +19,35 @@ canvas {
     height: 100%;
     background-size: cover;
     display: none;
+    z-index: 100; /* Đảm bảo các màn hình thắng/thua nằm trên cùng */
 }
+
 #scoreboard {
     position: absolute;
     top: 10px;
     left: 10px;
-    color: white;
+    color: rgb(0, 0, 0);
     font-family: Arial, sans-serif;
     font-size: 24px;
+    z-index: 10;
 }
 
-/* Style cho các nút điều khiển */
+/* Kiểu dáng nút điều khiển */
 .controls {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 10; /* Đảm bảo các nút điều khiển hiển thị trên cùng */
 }
+
 .control-button-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
+
 .control-button {
     width: 60px;
     height: 60px;
@@ -56,22 +63,24 @@ canvas {
     text-align: center;
     cursor: pointer;
 }
+
 .control-button.up {
     background-color: rgba(0, 255, 0, 0.8);
 }
+
 .control-button.down {
     background-color: rgba(255, 0, 0, 0.8);
 }
+
 .control-button.left {
     background-color: rgba(0, 0, 255, 0.8);
 }
+
 .control-button.right {
     background-color: rgba(255, 255, 0, 0.8);
 }
+
 #attackButton {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
     width: 60px;
     height: 60px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -83,7 +92,85 @@ canvas {
     font-size: 24px;
     color: #000;
     cursor: pointer;
+    z-index: 10;
+    position: fixed; /* Đảm bảo nút luôn hiển thị trên màn hình */
 }
+
 #attackButton:active {
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.play-again-button, .go-back-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+}
+
+.play-again-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.play-again-button:hover {
+    background-color: #45a049;
+}
+
+.go-back-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.go-back-button:hover {
+    background-color: #e53935;
+}
+
+/* Responsive cho thiết bị di động */
+@media (orientation: landscape) {
+    canvas {
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .controls {
+        bottom: 15%;
+        left: 10px;
+    }
+    
+    #attackButton {
+        bottom: 15%;
+        right: 10px;
+    }
+}
+
+@media (orientation: portrait) {
+    canvas {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .controls {
+        bottom: 10%;
+        left: 10px;
+    }
+
+    #attackButton {
+        bottom: 10%;
+        right: 10px;
+    }
 }

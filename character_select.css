@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-image: 
+    url(https://media.istockphoto.com/id/113494458/vi/anh/l%E1%BB%ADa-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-n%E1%BB%81n-%C4%91en.jpg?s=612x612&w=0&k=20&c=3KWiTBLBh3Tn7I05fK_Yq4N8fixFbyATYFxgG-w21HA=);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 40px;
+}
+
+h2 {
+    border: #000 solid 2px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 25px 10px 25px 10px;
+    background-color: greenyellow;
+}
+.character-selection {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.selection-box {
+    width: 48%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    background-color: pink;
+}
+
+h2 {
+    text-align: center;
+    color: #444;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+
+.character {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s;
+    text-align: center; /* Căn giữa nội dung */
+    border: #060700 solid 5px;
+    background-color: #f0f0f0;
+    overflow: hidden; /* Đảm bảo nội dung không bị tràn ra ngoài */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.character img {
+    width: 100%;
+    height: auto;
+    max-height: 150px; /* Đặt chiều cao tối đa cho hình ảnh */
+    object-fit: cover; /* Đảm bảo hình ảnh giữ tỷ lệ và không bị kéo dãn */
+    border-radius: 5px;
+    border: solid 3px #ff0000;
+    box-sizing: border-box;
+}
+
+.character-name {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.start-button {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover {
+    background-color: #45a049;
+}
+
+.character.selected {
+    border-color: #0800ff;
+}
+
+  

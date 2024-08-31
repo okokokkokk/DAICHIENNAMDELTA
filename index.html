@@ -1,41 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đại Chiến Nam Delta</title>
-    <link rel="website icon" type="jpg" href="doithu.jpg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="website icon" type="jpg" href="namdelta.jpg">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-    <div id="scoreboard">Score: 0 | Time: 0s</div>
-    <div class="win-screen" id="winScreen">
-        <img src="win.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-    </div>
-    <div class="game-over-screen" id="gameOverScreen">
-        <img src="thua.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url(https://cellphones.com.vn/sforum/wp-content/uploads/2021/12/16-1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(198, 154, 154, 0.8); /* Màu cam với độ trong suốt */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #302d2d; /* Màu trắng cho tiêu đề */
+            margin-bottom: 20px;
+            font-size: 35px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6); /* Viền chữ cho tiêu đề */
+        }
+
+        p {
+            color: #151414; /* Màu trắng cho đoạn văn */
+            line-height: 1.6;
+            font-size: 20px;
+            text-shadow: 1px 1px 2px rgba(215, 204, 204, 0.5); /* Viền chữ cho đoạn văn */
+        }
+
+        button {
+            background-color: #ff0606;
+            color: rgb(255, 255, 255);
+            border: #000 solid 2px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Viền chữ cho nút */
+        }
+
+        button:hover {
+            background-color: #1cbada;
+        }
+    </style>
+    <div class="container">
+        <h1>Chào mừng bạn đến với trò chơi của chúng tôi!</h1>
+        <p>Trò chơi này là một cuộc chiến thú vị, nơi bạn sẽ đối mặt với những thử thách và chiến đấu với các đối thủ ngu dốt.</p>
+        <p>Hãy chuẩn bị sẵn sàng và bắt đầu hành trình ngay bây giờ!</p>
+        <button id="startButton">Bắt đầu</button>
     </div>
 
-    <!-- Load images -->
-    <img id="backgroundImage" src="background.png" style="display:none;">
-    <img id="playerImage" src="nv.jpg" style="display:none;">
-    <img id="enemyImage" src="doithu.jpg" style="display:none;">
-
-    <div class="controls">
-        <div class="control-button-container">
-            <div class="control-button up">↑</div>
-        </div>
-        <div class="control-button-container">
-            <div class="control-button left">←</div>
-            <div class="control-button right">→</div>
-        </div>
-        <div class="control-button-container">
-            <div class="control-button down">↓</div>
-        </div>
-    </div>
-    <div id="attackButton">⚔︎</div>
-
-    <script src="game.js"></script>
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            window.location.href = 'choose.html';
+        });
+    </script>
 </body>
 </html>
