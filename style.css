@@ -63,6 +63,8 @@ canvas {
     text-align: center;
     cursor: pointer;
     outline: none; /* Loại bỏ đường viền mặc định của nút */
+    touch-action: manipulation; /* Ngăn chặn zoom */
+    -webkit-touch-callout: none; /* Ngăn chặn menu context */
 }
 
 .control-button.up {
@@ -96,6 +98,8 @@ canvas {
     z-index: 10;
     position: fixed; /* Đảm bảo nút luôn hiển thị trên màn hình */
     outline: none; /* Loại bỏ đường viền mặc định của nút */
+    touch-action: manipulation; /* Ngăn chặn zoom */
+    -webkit-touch-callout: none; /* Ngăn chặn menu context */
 }
 
 #attackButton:active {

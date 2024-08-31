@@ -245,9 +245,11 @@ function setupTouchControls() {
 
     Object.keys(controlButtons).forEach(direction => {
         controlButtons[direction].addEventListener('mousedown', () => {
+            event.preventDefault(); // Ngăn chặn zoom
             touchControls[direction] = true;
         });
         controlButtons[direction].addEventListener('mouseup', () => {
+            event.preventDefault(); // Ngăn chặn zoom
             touchControls[direction] = false;
         });
     });
@@ -279,9 +281,11 @@ function setupTouchControls() {
 
     Object.keys(controlButtons).forEach(direction => {
         controlButtons[direction].addEventListener('touchstart', () => {
+            event.preventDefault(); // Ngăn chặn zoom
             touchControls[direction] = true;
         });
         controlButtons[direction].addEventListener('touchend', () => {
+            event.preventDefault(); // Ngăn chặn zoom
             touchControls[direction] = false;
         });
     });

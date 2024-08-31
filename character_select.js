@@ -5,6 +5,8 @@ const playerCharacters = [
     { id: 'player4', name: 'Sơn Hà Mã', image: 'sonhanma.jpg' },
     { id: 'player5', name: 'Vinh Surprise', image: 'vinh.jpg' },
     { id: 'player6', name: 'Hoan Gay', image: 'hoan.jpg' },
+    { id: 'player7', name: 'Hiếu Dubai', image: 'hieu3lit.jpg' },
+    { id: 'player8', name: 'Thầy Cường', image: 'cuong.jpg' },
     // Thêm các nhân vật chính khác ở đây
 ];
 
@@ -14,7 +16,9 @@ const enemyCharacters = [
     { id: 'enemy3', name: 'Vinh Bất Ngờ', image: 'vinh.jpg' },
     { id: 'enemy4', name: 'Hoàn Seg', image: 'hoan.jpg' },
     { id: 'enemy5', name: 'Khải Lol', image: 'khai.jpg' },
-    { id: 'enemy5', name: 'Mạnh Weak', image: 'manh.jpg' },
+    { id: 'enemy6', name: 'Mạnh Weak', image: 'manh.jpg' },
+    { id: 'enemy7', name: 'Hiếu 3 lít', image: 'hieu3lit.jpg' },
+    { id: 'enemy8', name: 'Thầy Cường', image: 'cuong.jpg' },
     // Thêm các đối thủ khác ở đây
 ];
 
