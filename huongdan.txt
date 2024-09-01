@@ -1,0 +1,18 @@
+
+---------------------------------Hướng Dẫn Chơi Game-------------------------------------
+1. Chơi đơn:
+	- "W","A","S","D" để di chuyển.
+	- "SPACE" để tấn công.
+	- Sau 1.5s người chơi sẽ được hồi 30% lượng máu đã mất.
+
+2. Chơi đôi:
+	- Người chơi 1:
+		+ "w","a","s","d" để di chuyển (nhớ tắt Caps Lock).
+		+ "SPACE" để tấn công.
+	- Người chơi 2:
+		+ "↑","←","→","↓" để di chuyển.
+		+ "ENTER" để tấn công.
+		+ Chế độ đôi trên điện thoại không chơi được.
+
+* Còn 1 số tính năng khác đang cập nhật XD
+
