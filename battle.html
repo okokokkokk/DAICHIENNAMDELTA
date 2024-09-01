@@ -33,7 +33,8 @@
     <!-- Load images -->
     <img id="player1Image" src="khai.jpg" style="display:none;">
     <img id="player2Image" src="namdelta.jpg" style="display:none;">
-    <img id="swordImage" src="kiem.png" style="display:none;">
+    <img id="sword1Image" src="kiem2.png" style="display:none;">
+    <img id="sword2Image" src="kiem1.png" style="display:none;">
 
     <style>
         body {
@@ -266,14 +267,30 @@
             player2.x = canvas.width - 50 - PLAYER_SIZE;
             player2.y = canvas.height / 2 - PLAYER_SIZE / 2;
 
+            sword1Image = document.getElementById('sword1Image');
+            sword2Image = document.getElementById('sword2Image');
+
             // Hiển thị lại canvas và ẩn các màn hình kết thúc trò chơi
             document.getElementById('gameOverScreen').style.display = 'none';
             document.getElementById('winScreen').style.display = 'none';
             loadCharacterImages();
         }
 
-        function drawPlayer(player) {
+        function drawPlayer(player, swordImage, isLeft) {
+            // Vẽ nhân vật
             ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+            
+            // Vẽ thanh kiếm
+            let swordX, swordY;
+            const swordOffsetX = isLeft ? -30 : player.width - 20;
+            const swordOffsetY = player.height / 2 - 15; // Vị trí tay cầm kiếm (có thể điều chỉnh theo hình ảnh nhân vật)
+
+            swordX = player.x + swordOffsetX;
+            swordY = player.y + swordOffsetY;
+
+            ctx.drawImage(swordImage, swordX, swordY, 50, 50); // Điều chỉnh kích thước kiếm theo nhu cầu
+            
+            // Vẽ thanh máu
             drawHealthBar(player.x, player.y, player.health, player.color);
         }
 
@@ -471,22 +488,16 @@
         function update() {
             if (gameOver) return;
 
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             movePlayerWithCollisionCheck(player1);
             movePlayerWithCollisionCheck(player2);
 
+            drawPlayer(player1, sword1Image, false); // Player1 cầm kiếm bên phải
+            drawPlayer(player2, sword2Image, true);  // Player2 cầm kiếm bên trái
+
             attackPlayer(player1, player2);
             attackPlayer(player2, player1);
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawPlayer(player1);
-            drawPlayer(player2);
-            drawEnemies();
-
-            if (player1.health <= 0) {
-                showGameOverScreen('player1');
-            } else if (player2.health <= 0) {
-                showWinScreen('player2');
-            }
 
             requestAnimationFrame(update);
         }
