@@ -26,7 +26,8 @@ h2 {
     border-radius: 10px;
     box-sizing: border-box;
     padding: 25px 10px 25px 10px;
-    background-color: greenyellow;
+    background-color: rgb(208, 255, 0);
+    text-shadow: 2px 2px 4px rgb(249, 248, 249);
 }
 .character-selection {
     display: flex;
@@ -42,12 +43,14 @@ h2 {
     padding: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 20px;
-    background-color: pink;
+    background-color: rgb(255, 162, 0);
+    border: 3px solid #ff0000;
+    box-sizing: border-box;
 }
 
 h2 {
     text-align: center;
-    color: #444;
+    color: #000000;
 }
 
 .character-grid {
@@ -63,8 +66,8 @@ h2 {
     border-radius: 10px;
     transition: border-color 0.3s;
     text-align: center; /* Căn giữa nội dung */
-    border: #060700 solid 5px;
-    background-color: #f0f0f0;
+    border: #ff0000 solid 5px;
+    background-color: #f6ff00;
     overflow: hidden; /* Đảm bảo nội dung không bị tràn ra ngoài */
     display: flex;
     flex-direction: column;
@@ -78,14 +81,14 @@ h2 {
     max-height: 150px; /* Đặt chiều cao tối đa cho hình ảnh */
     object-fit: cover; /* Đảm bảo hình ảnh giữ tỷ lệ và không bị kéo dãn */
     border-radius: 5px;
-    border: solid 3px #ff0000;
+    border: solid 3px #ff9500;
     box-sizing: border-box;
 }
 
 .character-name {
     margin-top: 10px;
     font-size: 16px;
-    color: #333;
+    color: #000000;
 }
 
 .start-button {

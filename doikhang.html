@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đại Chiến Nam Delta</title>
+    <link rel="website icon" type="jpg" href="namdelta.jpg">
+</head>
+<body>
+    <div class="container">
+        <h1>Chọn Nhân Vật</h1>
+        <div class="character-selection">
+            <div class="selection-box">
+                <h2>Nhân Vật 1</h2>
+                <div id="playerCharacters" class="character-grid">
+                    <!-- Các nhân vật chính sẽ được thêm vào đây bằng JavaScript -->
+                </div>
+            </div>
+            <div class="selection-box">
+                <h2>Nhân Vật 2</h2>
+                <div id="enemyCharacters" class="character-grid">
+                    <!-- Các nhân vật đối thủ sẽ được thêm vào đây bằng JavaScript -->
+                </div>
+            </div>
+        </div>
+        <button id="startGame" class="start-button">Bắt Đầu Trò Chơi</button>
+        <button id="Quaylai" class="start-button">Quay lại</button>
+    </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: 
+            url(https://media.istockphoto.com/id/113494458/vi/anh/l%E1%BB%ADa-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-n%E1%BB%81n-%C4%91en.jpg?s=612x612&w=0&k=20&c=3KWiTBLBh3Tn7I05fK_Yq4N8fixFbyATYFxgG-w21HA=);
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 40px;
+        }
+
+        h2 {
+            border: #000 solid 2px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 25px 10px 25px 10px;
+            background-color: rgb(208, 255, 0);
+            text-shadow: 2px 2px 4px rgb(249, 248, 249);
+        }
+        .character-selection {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .selection-box {
+            width: 48%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            background-color: rgb(255, 162, 0);
+            border: 3px solid #ff0000;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #000000;
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+
+        .character {
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+            text-align: center; /* Căn giữa nội dung */
+            border: #ff0000 solid 5px;
+            background-color: #f6ff00;
+            overflow: hidden; /* Đảm bảo nội dung không bị tràn ra ngoài */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .character img {
+            width: 100%;
+            height: auto;
+            max-height: 150px; /* Đặt chiều cao tối đa cho hình ảnh */
+            object-fit: cover; /* Đảm bảo hình ảnh giữ tỷ lệ và không bị kéo dãn */
+            border-radius: 5px;
+            border: solid 3px #ff9500;
+            box-sizing: border-box;
+        }
+
+        .character-name {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #000000;
+        }
+
+        .start-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 18px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .start-button:hover {
+            background-color: #45a049;
+        }
+
+        .character.selected {
+            border-color: #0800ff;
+        }
+
+        
+    </style>
+    <script>
+        const playerCharacters = [
+            { id: 'player1', name: 'Khổn Lài', image: 'khai.jpg' },
+            { id: 'player2', name: 'Duy Đậu', image: 'duydau.jpg' },
+            { id: 'player3', name: 'Mạnh Strong', image: 'manh.jpg' },
+            { id: 'player4', name: 'Sơn Hà Mã', image: 'sonhanma.jpg' },
+            { id: 'player5', name: 'Vinh Surprise', image: 'vinh.jpg' },
+            { id: 'player6', name: 'Hoan Gay', image: 'hoan.jpg' },
+            { id: 'player7', name: 'Hiếu Dubai', image: 'hieu3lit.jpg' },
+            { id: 'player8', name: 'Thầy Cường', image: 'cuong.jpg' },
+            { id: 'player9', name: 'Đẳng Hai', image: 'danghai.jpg' },
+            { id: 'player10', name: 'Dương Đăng', image: 'dang.jpg' },
+            { id: 'player11', name: 'Xôn Luần', image: 'xuan.jpg' },
+            { id: 'player12', name: 'Nho Đại', image: 'nhodai.jpg' },
+            { id: 'player13', name: 'Đông Đông', image: 'dong.jpg' },
+            { id: 'player14', name: 'Đầu Hải', image: 'dauhai.jpg' },
+            { id: 'player15', name: 'Giang Gay', image: 'giang.jpg' },
+            { id: 'player16', name: 'Tùng Điếc', image: 'tung.jpg' },
+            { id: 'player17', name: 'Việt Anh', image: 'vanh.jpg' },
+            // Thêm các nhân vật chính khác ở đây
+        ];
+
+        const enemyCharacters = [
+            { id: 'enemy1', name: 'Nam Delta', image: 'namdelta.jpg' },
+            { id: 'enemy2', name: 'Nam Đao', image: 'namdao.jpg' },
+            { id: 'enemy3', name: 'Vinh Bất Ngờ', image: 'vinh.jpg' },
+            { id: 'enemy4', name: 'Hoàn Seg', image: 'hoan.jpg' },
+            { id: 'enemy5', name: 'Khải Lol', image: 'khai.jpg' },
+            { id: 'enemy6', name: 'Mạnh Weak', image: 'manh.jpg' },
+            { id: 'enemy7', name: 'Hiếu 3 lít', image: 'hieu3lit.jpg' },
+            { id: 'enemy8', name: 'Thầy Cường', image: 'cuong.jpg' },
+            { id: 'enemy9', name: 'Đăng Vâu', image: 'danghai.jpg' },
+            { id: 'enemy10', name: 'Mồm Lông', image: 'dang.jpg' },
+            { id: 'enemy11', name: 'Spring', image: 'xuan.jpg' },
+            { id: 'enemy12', name: 'Đại Nho', image: 'nhodai.jpg' },
+            { id: 'enemy13', name: 'Đôn Chề', image: 'dong.jpg' },
+            { id: 'enemy14', name: 'Đầu To Hải', image: 'dauhai.jpg' },
+            { id: 'enemy15', name: 'Giang XD', image: 'giang.jpg' },
+            { id: 'enemy16', name: 'Tùng Dick', image: 'tung.jpg' },
+            { id: 'enemy17', name: 'Vanh', image: 'vanh.jpg' },
+            // Thêm các đối thủ khác ở đây
+        ];
+
+        let selectedPlayer = null;
+        let selectedEnemy = null;
+
+        function createCharacterElements(characters, containerId, characterType) {
+            const container = document.getElementById(containerId);
+            characters.forEach(character => {
+                const characterElement = document.createElement('div');
+                characterElement.classList.add('character');
+                characterElement.innerHTML = `
+                    <img src="${character.image}" alt="${character.name}">
+                    <div class="character-name">${character.name}</div>
+                `;
+                characterElement.addEventListener('click', () => selectCharacter(character, characterType));
+                container.appendChild(characterElement);
+            });
+        }
+
+        function selectCharacter(character, characterType) {
+            const containers = {
+                player: document.getElementById('playerCharacters'),
+                enemy: document.getElementById('enemyCharacters')
+            };
+
+            containers[characterType].querySelectorAll('.character').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if (characterType === 'player') {
+                selectedPlayer = character;
+            } else {
+                selectedEnemy = character;
+            }
+        }
+
+        function startGame() {
+            if (selectedPlayer && selectedEnemy) {
+                localStorage.setItem('selectedPlayer', JSON.stringify(selectedPlayer));
+                localStorage.setItem('selectedEnemy', JSON.stringify(selectedEnemy));
+                window.location.href = 'battle.html'; // Chuyển đến trang trò chơi chính
+            } else {
+                alert('Vui lòng chọn cả nhân vật 1 và nhân vật 2 trước khi bắt đầu.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createCharacterElements(playerCharacters, 'playerCharacters', 'player');
+            createCharacterElements(enemyCharacters, 'enemyCharacters', 'enemy');
+
+            document.getElementById('startGame').addEventListener('click', startGame);
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            createCharacterElements(playerCharacters, 'playerCharacters', 'player');
+            createCharacterElements(enemyCharacters, 'enemyCharacters', 'enemy');
+
+            document.getElementById('startGame').addEventListener('click', startGame);
+
+            // Thêm sự kiện click cho nút "Quay lại"
+            document.getElementById('Quaylai').addEventListener('click', () => {
+                window.location.href = 'index.html'; // Chuyển hướng về trang index.html
+            });
+        });
+
+    </script>
+</body>
+</html>

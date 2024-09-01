@@ -320,17 +320,21 @@ function update() {
     player.dx = 0;
     player.dy = 0;
 
+    // Điều chỉnh vận tốc dựa trên các phím điều khiển đang nhấn
     if (touchControls['up']) player.dy = -PLAYER_SPEED * deltaTime;
     if (touchControls['down']) player.dy = PLAYER_SPEED * deltaTime;
     if (touchControls['left']) player.dx = -PLAYER_SPEED * deltaTime;
     if (touchControls['right']) player.dx = PLAYER_SPEED * deltaTime;
 
+    // Di chuyển nhân vật
     player.x += player.dx;
     player.y += player.dy;
 
+    // Đảm bảo nhân vật không ra ngoài khung hình
     player.x = Math.max(0, Math.min(width - PLAYER_SIZE, player.x));
     player.y = Math.max(0, Math.min(height - PLAYER_SIZE, player.y));
 
+    // Cập nhật vị trí và trạng thái của kẻ thù
     enemies.forEach((enemy) => {
         if (enemy.direction === 'left') enemy.x -= enemy.speed;
         if (enemy.direction === 'right') enemy.x += enemy.speed;
@@ -342,12 +346,13 @@ function update() {
 
         if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
             if (now - enemy.lastDamageTime > 1000) {
-                player.health -= 0.2 * MAX_HEALTH;
+                player.health -= 0.19 * MAX_HEALTH;
                 enemy.lastDamageTime = now;
             }
         }
     });
 
+    // Kiểm tra điều kiện kết thúc trò chơi
     if (player.health <= 0) {
         player.health = 0;
         gameOver = true;
@@ -359,6 +364,7 @@ function update() {
         document.getElementById('winScreen').style.display = 'block';
     }
 
+    // Hồi phục máu của người chơi
     if (now - lastAttackTime > 1500) {
         const lostHealth = MAX_HEALTH - player.health;
         const healAmount = 0.3 * lostHealth;
@@ -366,12 +372,14 @@ function update() {
         lastAttackTime = now;
     }
 
+    // Loại bỏ các kẻ thù đã bị tiêu diệt
     enemies.forEach((enemy) => {
         if (enemy.health <= 0) {
             enemies.splice(enemies.indexOf(enemy), 1);
         }
     });
 }
+
 
 // Draw game elements
 function draw() {

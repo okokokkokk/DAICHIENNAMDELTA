@@ -55,6 +55,7 @@
             font-size: 16px;
             transition: background-color 0.3s;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Viền chữ cho nút */
+            
         }
 
         button:hover {
@@ -65,12 +66,16 @@
         <h1>Chào mừng bạn đến với trò chơi của chúng tôi!</h1>
         <p>Trò chơi này là một cuộc chiến thú vị, nơi bạn sẽ đối mặt với những thử thách và chiến đấu với các đối thủ ngu dốt.</p>
         <p>Hãy chuẩn bị sẵn sàng và bắt đầu hành trình ngay bây giờ!</p>
-        <button id="startButton">Bắt đầu</button>
+        <button id="startButton">Chơi Đơn</button>
+        <button id="startButton2">Chơi Đôi</button>
     </div>
 
     <script>
         document.getElementById('startButton').addEventListener('click', function() {
             window.location.href = 'choose.html';
+        });
+        document.getElementById('startButton2').addEventListener('click', function() {
+            window.location.href = 'doikhang.html';
         });
     </script>
 </body>

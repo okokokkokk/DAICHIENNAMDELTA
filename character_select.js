@@ -7,6 +7,15 @@ const playerCharacters = [
     { id: 'player6', name: 'Hoan Gay', image: 'hoan.jpg' },
     { id: 'player7', name: 'Hiếu Dubai', image: 'hieu3lit.jpg' },
     { id: 'player8', name: 'Thầy Cường', image: 'cuong.jpg' },
+    { id: 'player9', name: 'Đẳng Hai', image: 'danghai.jpg' },
+    { id: 'player10', name: 'Dương Đăng', image: 'dang.jpg' },
+    { id: 'player11', name: 'Xôn Luần', image: 'xuan.jpg' },
+    { id: 'player12', name: 'Nho Đại', image: 'nhodai.jpg' },
+    { id: 'player13', name: 'Đông Đông', image: 'dong.jpg' },
+    { id: 'player14', name: 'Đầu Hải', image: 'dauhai.jpg' },
+    { id: 'player15', name: 'Giang Gay', image: 'giang.jpg' },
+    { id: 'player16', name: 'Tùng Điếc', image: 'tung.jpg' },
+    { id: 'player17', name: 'Việt Anh', image: 'vanh.jpg' },
     // Thêm các nhân vật chính khác ở đây
 ];
 
@@ -19,6 +28,15 @@ const enemyCharacters = [
     { id: 'enemy6', name: 'Mạnh Weak', image: 'manh.jpg' },
     { id: 'enemy7', name: 'Hiếu 3 lít', image: 'hieu3lit.jpg' },
     { id: 'enemy8', name: 'Thầy Cường', image: 'cuong.jpg' },
+    { id: 'enemy9', name: 'Đăng Vâu', image: 'danghai.jpg' },
+    { id: 'enemy10', name: 'Mồm Lông', image: 'dang.jpg' },
+    { id: 'enemy11', name: 'Spring', image: 'xuan.jpg' },
+    { id: 'enemy12', name: 'Đại Nho', image: 'nhodai.jpg' },
+    { id: 'enemy13', name: 'Đôn Chề', image: 'dong.jpg' },
+    { id: 'enemy14', name: 'Đầu To Hải', image: 'dauhai.jpg' },
+    { id: 'enemy15', name: 'Giang XD', image: 'giang.jpg' },
+    { id: 'enemy16', name: 'Tùng Dick', image: 'tung.jpg' },
+    { id: 'enemy17', name: 'Vanh', image: 'vanh.jpg' },
     // Thêm các đối thủ khác ở đây
 ];
 
@@ -70,6 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
     createCharacterElements(enemyCharacters, 'enemyCharacters', 'enemy');
 
     document.getElementById('startGame').addEventListener('click', startGame);
+
+    document.getElementById('Quaylai').addEventListener('click', () => {
+        window.location.href = 'index.html'; // Chuyển hướng về trang index.html
+    });
 });
 
 function startGame() {
