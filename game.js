@@ -17,6 +17,11 @@ let lastAttackTime = Date.now();
 const backgroundImage = document.getElementById('backgroundImage');
 const playerImage = document.getElementById('playerImage');
 const enemyImage = document.getElementById('enemyImage');
+const swordImage1 = new Image();
+swordImage1.src = 'kiem2.png'; // Đường dẫn tới hình ảnh kiếm 1
+const swordImage2 = new Image();
+swordImage2.src = 'kiem1.png'; // Đường dẫn tới hình ảnh kiếm 2
+
 
 function loadCharacterImages() {
     const selectedPlayer = JSON.parse(localStorage.getItem('selectedPlayer'));
@@ -156,44 +161,6 @@ function update() {
             enemies.splice(enemies.indexOf(enemy), 1);
         }
     });
-}
-
-function draw() {
-    ctx.clearRect(0, 0, width, height);
-
-    if (gameOver) {
-        return;
-    }
-
-    ctx.drawImage(backgroundImage, 0, 0, width, height);
-    ctx.drawImage(player.image, player.x, player.y, player.size, player.size);
-
-    enemies.forEach((enemy) => {
-        ctx.drawImage(enemy.image, enemy.x, enemy.y, enemy.size, enemy.size);
-    });
-
-    ctx.fillStyle = 'white';
-    ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size, HEALTH_BAR_HEIGHT);
-    ctx.fillStyle = 'green';
-    ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size * (player.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
-
-    enemies.forEach((enemy) => {
-        ctx.fillStyle = 'white';
-        ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size, HEALTH_BAR_HEIGHT);
-        ctx.fillStyle = 'red';
-        ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size * (enemy.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
-    });
-
-    const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
-    document.getElementById('scoreboard').textContent = `Score: ${Math.floor(score)} | Time: ${timeElapsed}s`;
-}
-
-function gameLoop() {
-    update();
-    draw();
-    if (!gameOver) {
-        requestAnimationFrame(gameLoop);
-    }
 }
 
 function resetGame() {
@@ -390,17 +357,25 @@ function draw() {
     }
 
     ctx.drawImage(backgroundImage, 0, 0, width, height);
+
+    // Vẽ nhân vật
     ctx.drawImage(player.image, player.x, player.y, player.size, player.size);
 
+    // Vẽ thanh kiếm
+    drawSwords();
+
+    // Vẽ kẻ thù
     enemies.forEach((enemy) => {
         ctx.drawImage(enemy.image, enemy.x, enemy.y, enemy.size, enemy.size);
     });
 
+    // Vẽ thanh máu của nhân vật
     ctx.fillStyle = 'white';
     ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size, HEALTH_BAR_HEIGHT);
     ctx.fillStyle = 'green';
     ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size * (player.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
 
+    // Vẽ thanh máu của kẻ thù
     enemies.forEach((enemy) => {
         ctx.fillStyle = 'white';
         ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size, HEALTH_BAR_HEIGHT);
@@ -410,6 +385,31 @@ function draw() {
 
     const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
     document.getElementById('scoreboard').textContent = `Score: ${Math.floor(score)} | Time: ${timeElapsed}s`;
+}
+
+function drawSwords() {
+    let swordOffsetX = 1; // Độ dịch chuyển kiếm theo trục X
+    let swordOffsetY = 1; // Độ dịch chuyển kiếm theo trục Y
+
+    // Tỉ lệ của thanh kiếm so với nhân vật
+    let swordScale = 0.25; // Điều chỉnh tỷ lệ này theo ý muốn
+
+    // Tính toán kích thước thanh kiếm dựa trên kích thước nhân vật và tỷ lệ
+    let swordWidth1 = swordImage1.width * swordScale;
+    let swordHeight1 = swordImage1.height * swordScale;
+    let swordWidth2 = swordImage2.width * swordScale;
+    let swordHeight2 = swordImage2.height * swordScale;
+
+    if (touchControls['left']) {
+        ctx.drawImage(swordImage1, player.x - swordOffsetX - swordWidth1, player.y + player.size / 4, swordWidth1, swordHeight1);
+        ctx.drawImage(swordImage2, player.x - swordOffsetX - swordWidth2, player.y + player.size / 4, swordWidth2, swordHeight2);
+    } else if (touchControls['right']) {
+        ctx.drawImage(swordImage1, player.x + player.size + swordOffsetX, player.y + player.size / 4, swordWidth1, swordHeight1);
+        ctx.drawImage(swordImage2, player.x + player.size + swordOffsetX, player.y + player.size / 4, swordWidth2, swordHeight2);
+    } else {
+        ctx.drawImage(swordImage1, player.x + player.size, player.y, swordWidth1, swordHeight1);
+        ctx.drawImage(swordImage2, player.x - swordWidth2, player.y, swordWidth2, swordHeight2);
+    }
 }
 
 // Main game loop
@@ -441,7 +441,7 @@ function resetGame() {
     };
 
     enemies = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 15; i++) {
         enemies.push({
             x: Math.random() * (width - ENEMY_SIZE),
             y: Math.random() * (height - ENEMY_SIZE),
