@@ -107,17 +107,21 @@ function update() {
     const deltaTime = (now - (player.lastUpdate || now)) / 1000;
     player.lastUpdate = now;
 
+    // Reset tốc độ di chuyển
     player.dx = 0;
     player.dy = 0;
 
-    if (touchControls['up']) player.dy = -PLAYER_SPEED * deltaTime;
-    if (touchControls['down']) player.dy = PLAYER_SPEED * deltaTime;
-    if (touchControls['left']) player.dx = -PLAYER_SPEED * deltaTime;
-    if (touchControls['right']) player.dx = PLAYER_SPEED * deltaTime;
+    // Điều chỉnh vận tốc dựa trên các phím điều khiển đang nhấn
+    if (touchControls['up']) player.dy = -PLAYER_SPEED;
+    if (touchControls['down']) player.dy = PLAYER_SPEED;
+    if (touchControls['left']) player.dx = -PLAYER_SPEED;
+    if (touchControls['right']) player.dx = PLAYER_SPEED;
 
-    player.x += player.dx;
-    player.y += player.dy;
+    // Di chuyển nhân vật
+    player.x += player.dx * deltaTime;
+    player.y += player.dy * deltaTime;
 
+    // Đảm bảo nhân vật không ra ngoài khung hình
     player.x = Math.max(0, Math.min(width - PLAYER_SIZE, player.x));
     player.y = Math.max(0, Math.min(height - PLAYER_SIZE, player.y));
 
@@ -132,7 +136,7 @@ function update() {
 
         if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
             if (now - enemy.lastDamageTime > 1000) {
-                player.health -= 0.2 * MAX_HEALTH;
+                player.health -= 0.19 * MAX_HEALTH;
                 enemy.lastDamageTime = now;
             }
         }
