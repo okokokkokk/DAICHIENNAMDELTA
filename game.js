@@ -47,7 +47,6 @@ let enemies = [];
 let touchControls = {};
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === ' ') attack();
     switch (e.key) {
         case 'w':
             touchControls['up'] = true;
@@ -60,6 +59,9 @@ document.addEventListener('keydown', (e) => {
             break;
         case 'd':
             touchControls['right'] = true;
+            break;
+        case ' ':
+            attack();
             break;
     }
 });
@@ -80,6 +82,7 @@ document.addEventListener('keyup', (e) => {
             break;
     }
 });
+
 
 document.getElementById('attackButton').addEventListener('click', attack);
 
@@ -216,11 +219,19 @@ function setupTouchControls() {
 
     Object.keys(controlButtons).forEach(direction => {
         controlButtons[direction].addEventListener('mousedown', () => {
-            event.preventDefault(); // Ngăn chặn zoom
             touchControls[direction] = true;
         });
         controlButtons[direction].addEventListener('mouseup', () => {
-            event.preventDefault(); // Ngăn chặn zoom
+            touchControls[direction] = false;
+        });
+    });
+
+    // Đảm bảo các sự kiện touch cũng được xử lý
+    Object.keys(controlButtons).forEach(direction => {
+        controlButtons[direction].addEventListener('touchstart', () => {
+            touchControls[direction] = true;
+        });
+        controlButtons[direction].addEventListener('touchend', () => {
             touchControls[direction] = false;
         });
     });

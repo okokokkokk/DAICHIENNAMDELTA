@@ -264,8 +264,11 @@
             // Reset các thuộc tính khác nếu cần
             player1.x = 50;
             player1.y = canvas.height / 2 - PLAYER_SIZE / 2;
+            player1.move = { up: false, down: false, left: false, right: false }; // Reset move
+
             player2.x = canvas.width - 50 - PLAYER_SIZE;
             player2.y = canvas.height / 2 - PLAYER_SIZE / 2;
+            player2.move = { up: false, down: false, left: false, right: false }; // Reset move
 
             sword1Image = document.getElementById('sword1Image');
             sword2Image = document.getElementById('sword2Image');
