@@ -3,25 +3,25 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width;
 const height = canvas.height;
 
-const PLAYER_SIZE = 64;
+let PLAYER_SIZE = 64;
 const ENEMY_SIZE = 64;
 const HEALTH_BAR_HEIGHT = 10;
-const PLAYER_SPEED = 200;
-const MAX_HEALTH = 100;
+let PLAYER_SPEED = 200;
+let PLAYER_DAMAGE = 30;
+let MAX_HEALTH = 100;
+let PLAYER_MAX_HEALTH = 100;
 
 let score = 0;
 let startTime = Date.now();
 let gameOver = false;
-let lastAttackTime = Date.now();
 
 const backgroundImage = document.getElementById('backgroundImage');
-const playerImage = document.getElementById('playerImage');
-const enemyImage = document.getElementById('enemyImage');
+const playerImage = new Image();
+const enemyImage = new Image();
 const swordImage1 = new Image();
-swordImage1.src = 'kiem2.png'; // Đường dẫn tới hình ảnh kiếm 1
+swordImage1.src = 'kiem2.png';
 const swordImage2 = new Image();
-swordImage2.src = 'kiem1.png'; // Đường dẫn tới hình ảnh kiếm 2
-
+swordImage2.src = 'kiem1.png';
 
 function loadCharacterImages() {
     const selectedPlayer = JSON.parse(localStorage.getItem('selectedPlayer'));
@@ -30,184 +30,63 @@ function loadCharacterImages() {
     if (selectedPlayer && selectedEnemy) {
         playerImage.src = selectedPlayer.image;
         enemyImage.src = selectedEnemy.image;
+        player.id = selectedPlayer.id;
+
+        if (selectedPlayer.image === 'hieu3lit.jpg') {
+            PLAYER_SIZE = 100; 
+            PLAYER_SPEED = 400;
+            PLAYER_DAMAGE = 80; 
+        } else if (selectedPlayer.image === 'duydau.jpg') {
+            PLAYER_SPEED = 300; 
+            PLAYER_DAMAGE = 50; 
+        } else if (selectedPlayer.image === 'khai.jpg') {
+            PLAYER_SPEED = 500;
+            PLAYER_SIZE = 70; 
+            PLAYER_DAMAGE = 60; 
+        } else {
+            PLAYER_SIZE = 64; 
+            PLAYER_SPEED = 200;
+            PLAYER_DAMAGE = 30; 
+        }
+
+        player.size = PLAYER_SIZE;
+        player.speed = PLAYER_SPEED;
+        player.damage = PLAYER_DAMAGE; // Cập nhật lại sát thương nếu cần
     }
 }
+
+// Cập nhật giá trị MAX_HEALTH cho các nhân vật
+function updateCharacterHealth() {
+    if (player.image.src.endsWith('duydau.jpg')) {
+        player.health = 250; 
+        PLAYER_MAX_HEALTH = 250; // Cập nhật MAX_HEALTH cho nhân vật chính
+    } else if (player.image.src.endsWith('khai.jpg')) {
+        player.health = 200;
+        PLAYER_MAX_HEALTH = 200; // Cập nhật MAX_HEALTH cho nhân vật chính
+    } else {
+        player.health = PLAYER_MAX_HEALTH;
+    }
+}
+
 
 let player = {
     x: width / 2,
     y: height / 2,
     size: PLAYER_SIZE,
-    health: MAX_HEALTH,
+    health: PLAYER_MAX_HEALTH,
     image: playerImage,
-    dx: 0,
-    dy: 0
 };
 
+
 let enemies = [];
-let touchControls = {};
-
-document.addEventListener('keydown', (e) => {
-    switch (e.key) {
-        case 'w':
-            touchControls['up'] = true;
-            break;
-        case 's':
-            touchControls['down'] = true;
-            break;
-        case 'a':
-            touchControls['left'] = true;
-            break;
-        case 'd':
-            touchControls['right'] = true;
-            break;
-        case ' ':
-            attack();
-            break;
-    }
-});
-
-document.addEventListener('keyup', (e) => {
-    switch (e.key) {
-        case 'w':
-            touchControls['up'] = false;
-            break;
-        case 's':
-            touchControls['down'] = false;
-            break;
-        case 'a':
-            touchControls['left'] = false;
-            break;
-        case 'd':
-            touchControls['right'] = false;
-            break;
-    }
-});
-
+let touchControls = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+};
 
 document.getElementById('attackButton').addEventListener('click', attack);
-
-function attack() {
-    if (gameOver) return;
-
-    enemies.forEach((enemy, index) => {
-        if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
-            enemy.attackCount += 1;
-            enemy.health -= 0.6 * enemy.health;
-            if (enemy.attackCount >= 3) {
-                enemies.splice(index, 1);
-            }
-            score += Math.max(1, 200 / ((Date.now() - startTime) / 1000));
-        }
-    });
-
-    lastAttackTime = Date.now();
-}
-
-function update() {
-    if (gameOver) return;
-
-    const now = Date.now();
-    const deltaTime = (now - (player.lastUpdate || now)) / 1000;
-    player.lastUpdate = now;
-
-    // Reset tốc độ di chuyển
-    player.dx = 0;
-    player.dy = 0;
-
-    // Điều chỉnh vận tốc dựa trên các phím điều khiển đang nhấn
-    if (touchControls['up']) player.dy = -PLAYER_SPEED;
-    if (touchControls['down']) player.dy = PLAYER_SPEED;
-    if (touchControls['left']) player.dx = -PLAYER_SPEED;
-    if (touchControls['right']) player.dx = PLAYER_SPEED;
-
-    // Di chuyển nhân vật
-    player.x += player.dx * deltaTime;
-    player.y += player.dy * deltaTime;
-
-    // Đảm bảo nhân vật không ra ngoài khung hình
-    player.x = Math.max(0, Math.min(width - PLAYER_SIZE, player.x));
-    player.y = Math.max(0, Math.min(height - PLAYER_SIZE, player.y));
-
-    enemies.forEach((enemy) => {
-        if (enemy.direction === 'left') enemy.x -= enemy.speed;
-        if (enemy.direction === 'right') enemy.x += enemy.speed;
-        if (enemy.direction === 'up') enemy.y -= enemy.speed;
-        if (enemy.direction === 'down') enemy.y += enemy.speed;
-
-        if (enemy.x < 0 || enemy.x > width - ENEMY_SIZE) enemy.direction = enemy.direction === 'left' ? 'right' : 'left';
-        if (enemy.y < 0 || enemy.y > height - ENEMY_SIZE) enemy.direction = enemy.direction === 'up' ? 'down' : 'up';
-
-        if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
-            if (now - enemy.lastDamageTime > 1000) {
-                player.health -= 0.19 * MAX_HEALTH;
-                enemy.lastDamageTime = now;
-            }
-        }
-    });
-
-    if (player.health <= 0) {
-        player.health = 0;
-        gameOver = true;
-        document.getElementById('gameOverScreen').style.display = 'block';
-    }
-
-    if (enemies.length === 0 && !gameOver) {
-        gameOver = true;
-        document.getElementById('winScreen').style.display = 'block';
-    }
-
-    if (now - lastAttackTime > 1500) {
-        const lostHealth = MAX_HEALTH - player.health;
-        const healAmount = 0.3 * lostHealth;
-        player.health = Math.min(MAX_HEALTH, player.health + healAmount);
-        lastAttackTime = now;
-    }
-
-    enemies.forEach((enemy) => {
-        if (enemy.health <= 0) {
-            enemies.splice(enemies.indexOf(enemy), 1);
-        }
-    });
-}
-
-function resetGame() {
-    score = 0;
-    startTime = Date.now();
-    gameOver = false;
-    lastAttackTime = Date.now();
-
-    loadCharacterImages();
-
-    player = {
-        x: width / 2,
-        y: height / 2,
-        size: PLAYER_SIZE,
-        health: MAX_HEALTH,
-        image: playerImage,
-        dx: 0,
-        dy: 0
-    };
-
-    enemies = [];
-    for (let i = 0; i < 10; i++) {
-        enemies.push({
-            x: Math.random() * (width - ENEMY_SIZE),
-            y: Math.random() * (height - ENEMY_SIZE),
-            size: ENEMY_SIZE,
-            speed: 2,
-            health: MAX_HEALTH,
-            image: enemyImage,
-            direction: ['left', 'right', 'up', 'down'][Math.floor(Math.random() * 4)],
-            lastDamageTime: Date.now(),
-            attackCount: 0
-        });
-    }
-
-    document.getElementById('winScreen').style.display = 'none';
-    document.getElementById('gameOverScreen').style.display = 'none';
-
-    gameLoop();
-}
 
 function setupTouchControls() {
     const controlButtons = {
@@ -272,26 +151,83 @@ function setupTouchControls() {
         });
     });
 }
-
-// Define functions to handle game logic
 function attack() {
     if (gameOver) return;
 
-    enemies.forEach((enemy, index) => {
-        if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
-            enemy.attackCount += 1;
-            enemy.health -= 0.6 * enemy.health;
-            if (enemy.attackCount >= 3) {
-                enemies.splice(index, 1);
-            }
-            score += Math.max(1, 200 / ((Date.now() - startTime) / 1000));
-        }
-    });
+    if (keyPressed === 'j') { // Kiểm tra nếu phím 'j' được nhấn
+        enemies.forEach((enemy, index) => {
+            // Kiểm tra va chạm với kẻ địch
+            if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
+                
+                // Sử dụng giá trị sát thương từ đối tượng player
+                const playerDamage = player.damage || PLAYER_DAMAGE;
 
-    lastAttackTime = Date.now();
+                // Trừ máu của kẻ địch theo sát thương
+                enemy.health -= playerDamage;
+
+                // Nếu máu của kẻ địch <= 0, xóa khỏi danh sách kẻ địch
+                if (enemy.health <= 0) {
+                    enemies.splice(index, 1);
+
+                    // Cập nhật điểm số
+                    score += Math.max(1, 200 / ((Date.now() - startTime) / 1000));
+                }
+            }
+        });
+    }
 }
 
+document.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'w':
+            touchControls['up'] = true;
+            break;
+        case 's':
+            touchControls['down'] = true;
+            break;
+        case 'a':
+            touchControls['left'] = true;
+            break;
+        case 'd':
+            touchControls['right'] = true;
+            break;
+        case 'j':
+            keyPressed = 'j'; // Cập nhật keyPressed khi phím 'j' được nhấn
+            attack(); // Gọi hàm attack khi phím 'j' được nhấn
+            break;
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    switch (e.key) {
+        case 'w':
+            touchControls['up'] = false;
+            break;
+        case 's':
+            touchControls['down'] = false;
+            break;
+        case 'a':
+            touchControls['left'] = false;
+            break;
+        case 'd':
+            touchControls['right'] = false;
+            break;
+        case 'j':
+            keyPressed = ''; // Cập nhật keyPressed khi phím 'j' được nhả
+            break;
+    }
+});
+
+
 // Update game state
+function updateHealthBars() {
+    const playerHealthPercent = player.health / PLAYER_MAX_HEALTH * 100;
+    const enemyHealthPercent = enemies.length > 0 ? enemies[0].health / MAX_HEALTH * 100 : 0;
+
+    document.getElementById('playerHealth').style.width = playerHealthPercent + '%';
+    document.getElementById('enemyHealth').style.width = enemyHealthPercent + '%';
+}
+
 function update() {
     if (gameOver) return;
 
@@ -299,24 +235,24 @@ function update() {
     const deltaTime = (now - (player.lastUpdate || now)) / 1000;
     player.lastUpdate = now;
 
+    // Đặt lại vận tốc theo trục x và y về 0
     player.dx = 0;
     player.dy = 0;
 
-    // Điều chỉnh vận tốc dựa trên các phím điều khiển đang nhấn
-    if (touchControls['up']) player.dy = -PLAYER_SPEED * deltaTime;
-    if (touchControls['down']) player.dy = PLAYER_SPEED * deltaTime;
-    if (touchControls['left']) player.dx = -PLAYER_SPEED * deltaTime;
-    if (touchControls['right']) player.dx = PLAYER_SPEED * deltaTime;
+    // Cập nhật vận tốc dựa trên trạng thái điều khiển
+    if (touchControls['up']) player.dy = -PLAYER_SPEED;
+    if (touchControls['down']) player.dy = PLAYER_SPEED;
+    if (touchControls['left']) player.dx = -PLAYER_SPEED;
+    if (touchControls['right']) player.dx = PLAYER_SPEED;
 
-    // Di chuyển nhân vật
-    player.x += player.dx;
-    player.y += player.dy;
+    // Cập nhật vị trí của nhân vật dựa trên vận tốc và thời gian trôi qua
+    player.x += player.dx * deltaTime;
+    player.y += player.dy * deltaTime;
 
-    // Đảm bảo nhân vật không ra ngoài khung hình
-    player.x = Math.max(0, Math.min(width - PLAYER_SIZE, player.x));
-    player.y = Math.max(0, Math.min(height - PLAYER_SIZE, player.y));
+    // Giới hạn vị trí của nhân vật trong canvas
+    player.x = Math.max(0, Math.min(width - player.size, player.x));
+    player.y = Math.max(0, Math.min(height - player.size, player.y));
 
-    // Cập nhật vị trí và trạng thái của kẻ thù
     enemies.forEach((enemy) => {
         if (enemy.direction === 'left') enemy.x -= enemy.speed;
         if (enemy.direction === 'right') enemy.x += enemy.speed;
@@ -328,13 +264,12 @@ function update() {
 
         if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
             if (now - enemy.lastDamageTime > 1000) {
-                player.health -= 0.19 * MAX_HEALTH;
+                player.health -= 10;
                 enemy.lastDamageTime = now;
             }
         }
     });
 
-    // Kiểm tra điều kiện kết thúc trò chơi
     if (player.health <= 0) {
         player.health = 0;
         gameOver = true;
@@ -346,22 +281,40 @@ function update() {
         document.getElementById('winScreen').style.display = 'block';
     }
 
-    // Hồi phục máu của người chơi
     if (now - lastAttackTime > 1500) {
-        const lostHealth = MAX_HEALTH - player.health;
+        const lostHealth = PLAYER_MAX_HEALTH - player.health;
         const healAmount = 0.3 * lostHealth;
-        player.health = Math.min(MAX_HEALTH, player.health + healAmount);
+        player.health = Math.min(PLAYER_MAX_HEALTH, player.health + healAmount);
         lastAttackTime = now;
     }
 
-    // Loại bỏ các kẻ thù đã bị tiêu diệt
     enemies.forEach((enemy) => {
         if (enemy.health <= 0) {
             enemies.splice(enemies.indexOf(enemy), 1);
         }
     });
+
+    updateHealthBars(); // Cập nhật thanh máu sau mỗi lần cập nhật
 }
 
+// Vẽ thanh máu nhân vật
+function drawHealthBars() {
+    // Vẽ thanh máu của nhân vật chính
+    ctx.fillStyle = 'white';
+    ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size, HEALTH_BAR_HEIGHT);
+
+    ctx.fillStyle = 'green';
+    const healthBarWidth = player.size * (player.health / PLAYER_MAX_HEALTH); // Chiều dài thanh máu
+    ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, healthBarWidth, HEALTH_BAR_HEIGHT);
+    
+    // Vẽ thanh máu của kẻ địch
+    enemies.forEach((enemy) => {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size, HEALTH_BAR_HEIGHT);
+        ctx.fillStyle = 'red';
+        ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size * (enemy.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
+    });
+}
 
 // Draw game elements
 function draw() {
@@ -384,19 +337,8 @@ function draw() {
         ctx.drawImage(enemy.image, enemy.x, enemy.y, enemy.size, enemy.size);
     });
 
-    // Vẽ thanh máu của nhân vật
-    ctx.fillStyle = 'white';
-    ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size, HEALTH_BAR_HEIGHT);
-    ctx.fillStyle = 'green';
-    ctx.fillRect(player.x, player.y - HEALTH_BAR_HEIGHT, player.size * (player.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
-
-    // Vẽ thanh máu của kẻ thù
-    enemies.forEach((enemy) => {
-        ctx.fillStyle = 'white';
-        ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size, HEALTH_BAR_HEIGHT);
-        ctx.fillStyle = 'red';
-        ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size * (enemy.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
-    });
+    // Vẽ thanh máu
+    drawHealthBars();
 
     const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
     document.getElementById('scoreboard').textContent = `Score: ${Math.floor(score)} | Time: ${timeElapsed}s`;
@@ -436,25 +378,29 @@ function gameLoop() {
     }
 }
 
-// Initialize the game
 function resetGame() {
     score = 0;
     startTime = Date.now();
     gameOver = false;
     lastAttackTime = Date.now();
 
+    // Gọi hàm để cập nhật các thuộc tính của player từ localStorage
     loadCharacterImages();
+    updateCharacterHealth(); // Cập nhật sức khỏe của nhân vật
 
+    // Khởi tạo lại player sau khi loadCharacterImages đã cập nhật các thuộc tính
     player = {
         x: width / 2,
         y: height / 2,
         size: PLAYER_SIZE,
-        health: MAX_HEALTH,
+        health: PLAYER_MAX_HEALTH, // Sử dụng PLAYER_MAX_HEALTH
+        damage: PLAYER_DAMAGE,
         image: playerImage,
         dx: 0,
-        dy: 0
+        dy: 0,
     };
 
+    // Khởi tạo danh sách kẻ địch
     enemies = [];
     for (let i = 0; i < 15; i++) {
         enemies.push({
@@ -462,7 +408,7 @@ function resetGame() {
             y: Math.random() * (height - ENEMY_SIZE),
             size: ENEMY_SIZE,
             speed: 2,
-            health: MAX_HEALTH,
+            health: MAX_HEALTH, 
             image: enemyImage,
             direction: ['left', 'right', 'up', 'down'][Math.floor(Math.random() * 4)],
             lastDamageTime: Date.now(),
@@ -475,3 +421,30 @@ function resetGame() {
 
     gameLoop();
 }
+
+
+
+document.getElementById('playAgainWin').addEventListener('click', function() {
+    setupGame();
+    document.getElementById('winScreen').style.display = 'none';
+});
+
+document.getElementById('goBackWin').addEventListener('click', function() {
+    window.location.href = 'choose.html';
+});
+
+document.getElementById('playAgainLose').addEventListener('click', function() {
+    setupGame();
+    document.getElementById('WinScreen').style.display = 'none';
+});
+
+document.getElementById('goBackLose').addEventListener('click', function() {
+    window.location.href = 'choose.html';
+});
+document.getElementById('playAgainWin').addEventListener('click', function() {
+    location.reload(); // Làm mới trang
+});
+
+document.getElementById('playAgainLose').addEventListener('click', function() {
+    location.reload(); // Làm mới trang
+});

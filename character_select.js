@@ -1,5 +1,5 @@
 const playerCharacters = [
-    { id: 'player1', name: 'Khổn Lài', image: 'khai.jpg' },
+    { id: 'player1', name: 'Khổn Lài', image: 'khai.jpg', },
     { id: 'player2', name: 'Duy Đậu', image: 'duydau.jpg' },
     { id: 'player3', name: 'Mạnh Strong', image: 'manh.jpg' },
     { id: 'player4', name: 'Sơn Hà Mã', image: 'sonhanma.jpg' },
@@ -99,13 +99,3 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'index.html'; // Chuyển hướng về trang index.html
     });
 });
-
-function startGame() {
-    if (selectedPlayer && selectedEnemy) {
-        localStorage.setItem('selectedPlayer', JSON.stringify(selectedPlayer));
-        localStorage.setItem('selectedEnemy', JSON.stringify(selectedEnemy));
-        window.location.href = 'game.html'; // Chuyển đến trang trò chơi chính
-    } else {
-        alert('Vui lòng chọn cả nhân vật chính và đối thủ trước khi bắt đầu.');
-    }
-}
