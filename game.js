@@ -104,7 +104,9 @@ function loadCharacterImages() {
             PLAYER_DAMAGE = 50; 
             PLAYER_SIZE = 80; 
             PLAYER_SPEED = 200;
-        }  else {
+        } else if (selectedPlayer.image === 'hoan.jpg') {
+            PLAYER_DAMAGE = 100; 
+        } else {
             PLAYER_SIZE = 64; 
             PLAYER_SPEED = 200;
             PLAYER_DAMAGE = 30; 
