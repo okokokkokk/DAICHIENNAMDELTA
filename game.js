@@ -8,12 +8,13 @@ const ENEMY_SIZE = 64;
 const HEALTH_BAR_HEIGHT = 10;
 let PLAYER_SPEED = 200;
 let PLAYER_DAMAGE = 30;
-let MAX_HEALTH = 100;
+let MAX_HEALTH = 200;
 let PLAYER_MAX_HEALTH = 100;
 
 let score = 0;
 let startTime = Date.now();
 let gameOver = false;
+let bestScore = localStorage.getItem('bestScore') || 0;
 
 const backgroundImage = document.getElementById('backgroundImage');
 const playerImage = new Image();
@@ -35,7 +36,7 @@ function loadCharacterImages() {
         if (selectedPlayer.image === 'hieu3lit.jpg') {
             PLAYER_SIZE = 100; 
             PLAYER_SPEED = 400;
-            PLAYER_DAMAGE = 80; 
+            PLAYER_DAMAGE = 200; 
         } else if (selectedPlayer.image === 'duydau.jpg') {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 50; 
@@ -62,7 +63,23 @@ function updateCharacterHealth() {
         PLAYER_MAX_HEALTH = 250; // Cập nhật MAX_HEALTH cho nhân vật chính
     } else if (player.image.src.endsWith('khai.jpg')) {
         player.health = 200;
-        PLAYER_MAX_HEALTH = 200; // Cập nhật MAX_HEALTH cho nhân vật chính
+        PLAYER_MAX_HEALTH = 200; 
+    } 
+    else if (player.image.src.endsWith('hieu3lit.jpg')) {
+        player.health = 300;
+        PLAYER_MAX_HEALTH = 300; 
+    } 
+    else if (player.image.src.endsWith('sonhanma.jpg')) {
+        player.health = 500;
+        PLAYER_MAX_HEALTH = 500; 
+    } 
+    else if (player.image.src.endsWith('cuong.jpg')) {
+        player.health = 400;
+        PLAYER_MAX_HEALTH = 400; 
+    } 
+    else if (player.image.src.endsWith('vinh.jpg')) {
+        player.health = 400;
+        PLAYER_MAX_HEALTH = 400; 
     } else {
         player.health = PLAYER_MAX_HEALTH;
     }
@@ -151,14 +168,18 @@ function setupTouchControls() {
         });
     });
 }
+
+let keyPressed = ''; // Khai báo biến keyPressed ở cấp toàn cục
+
+// Hàm tấn công
 function attack() {
     if (gameOver) return;
 
-    if (keyPressed === 'j') { // Kiểm tra nếu phím 'j' được nhấn
+    // Kiểm tra nếu phím 'j' được nhấn hoặc nút tấn công được nhấn
+    if (keyPressed === 'j') {
         enemies.forEach((enemy, index) => {
             // Kiểm tra va chạm với kẻ địch
             if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
-                
                 // Sử dụng giá trị sát thương từ đối tượng player
                 const playerDamage = player.damage || PLAYER_DAMAGE;
 
@@ -170,12 +191,18 @@ function attack() {
                     enemies.splice(index, 1);
 
                     // Cập nhật điểm số
-                    score += Math.max(1, 200 / ((Date.now() - startTime) / 1000));
+                    score += Math.round(Math.max(1, 200 / ((Date.now() - startTime) / 1000)));
                 }
             }
         });
     }
 }
+
+document.getElementById('attackButton').addEventListener('click', () => {
+    keyPressed = 'j'; // Cập nhật keyPressed khi nút tấn công được nhấn
+    attack(); // Gọi hàm attack khi nút tấn công được nhấn
+    keyPressed = ''; // Đặt lại keyPressed sau khi tấn công
+});
 
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
@@ -218,7 +245,6 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
-
 // Update game state
 function updateHealthBars() {
     const playerHealthPercent = player.health / PLAYER_MAX_HEALTH * 100;
@@ -231,6 +257,9 @@ function updateHealthBars() {
 function update() {
     if (gameOver) return;
 
+    const currentTime = Math.floor((Date.now() - startTime) / 1000);
+    document.getElementById('scoreboard').innerText = `Score: ${Math.round(score)} | Best Score: ${bestScore} | Time: ${currentTime}s`;
+    
     const now = Date.now();
     const deltaTime = (now - (player.lastUpdate || now)) / 1000;
     player.lastUpdate = now;
@@ -264,7 +293,7 @@ function update() {
 
         if (Math.abs(player.x - enemy.x) < PLAYER_SIZE && Math.abs(player.y - enemy.y) < PLAYER_SIZE) {
             if (now - enemy.lastDamageTime > 1000) {
-                player.health -= 10;
+                player.health -= 15;
                 enemy.lastDamageTime = now;
             }
         }
@@ -314,6 +343,38 @@ function drawHealthBars() {
         ctx.fillStyle = 'red';
         ctx.fillRect(enemy.x, enemy.y - HEALTH_BAR_HEIGHT, enemy.size * (enemy.health / MAX_HEALTH), HEALTH_BAR_HEIGHT);
     });
+}
+
+// Cập nhật điểm số và best score khi kết thúc trò chơi
+function endGame(isWin) {
+    gameOver = true;
+    const currentTime = Math.floor((Date.now() - startTime) / 1000);
+
+    // Nếu người chơi thắng
+    if (isWin) {
+        document.getElementById('winScreen').style.display = 'block';
+    } else {
+        document.getElementById('gameOverScreen').style.display = 'block';
+    }
+
+    // Cập nhật best score nếu điểm số hiện tại cao hơn best score
+    if (score > bestScore) {
+        bestScore = score; // Cập nhật best score
+        localStorage.setItem('bestScore', bestScore); // Lưu vào localStorage
+    }
+
+    document.getElementById('scoreboard').innerText = `Score: ${Math.round(score)} | Best Score: ${bestScore} | Time: ${currentTime}s`;
+}
+
+
+// Gọi hàm endGame khi thắng hoặc thua:
+function checkGameOver() {
+    if (player.health <= 0) {
+        endGame(false); // Game over
+    }
+    if (enemies.length === 0) {
+        endGame(true); // Player wins
+    }
 }
 
 // Draw game elements
@@ -373,10 +434,17 @@ function drawSwords() {
 function gameLoop() {
     update();
     draw();
+    checkGameOver(); // Kiểm tra kết thúc trò chơi sau mỗi lần cập nhật
     if (!gameOver) {
         requestAnimationFrame(gameLoop);
     }
 }
+
+document.getElementById('playAgainWin').addEventListener('click', resetGame);
+document.getElementById('playAgainLose').addEventListener('click', resetGame);
+document.getElementById('goBackWin').addEventListener('click', () => window.location.href = 'choose.html');
+document.getElementById('goBackLose').addEventListener('click', () => window.location.href = 'choose.html');
+
 
 function resetGame() {
     score = 0;
@@ -402,7 +470,7 @@ function resetGame() {
 
     // Khởi tạo danh sách kẻ địch
     enemies = [];
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
         enemies.push({
             x: Math.random() * (width - ENEMY_SIZE),
             y: Math.random() * (height - ENEMY_SIZE),
@@ -423,28 +491,3 @@ function resetGame() {
 }
 
 
-
-document.getElementById('playAgainWin').addEventListener('click', function() {
-    setupGame();
-    document.getElementById('winScreen').style.display = 'none';
-});
-
-document.getElementById('goBackWin').addEventListener('click', function() {
-    window.location.href = 'choose.html';
-});
-
-document.getElementById('playAgainLose').addEventListener('click', function() {
-    setupGame();
-    document.getElementById('WinScreen').style.display = 'none';
-});
-
-document.getElementById('goBackLose').addEventListener('click', function() {
-    window.location.href = 'choose.html';
-});
-document.getElementById('playAgainWin').addEventListener('click', function() {
-    location.reload(); // Làm mới trang
-});
-
-document.getElementById('playAgainLose').addEventListener('click', function() {
-    location.reload(); // Làm mới trang
-});
