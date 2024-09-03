@@ -35,16 +35,76 @@ function loadCharacterImages() {
 
         if (selectedPlayer.image === 'hieu3lit.jpg') {
             PLAYER_SIZE = 100; 
-            PLAYER_SPEED = 400;
+            PLAYER_SPEED = 380;
             PLAYER_DAMAGE = 200; 
-        } else if (selectedPlayer.image === 'duydau.jpg') {
+        } else if (selectedPlayer.image === 'namdelta.jpg') {
             PLAYER_SPEED = 300; 
-            PLAYER_DAMAGE = 50; 
+            PLAYER_DAMAGE = 300; 
+            PLAYER_SIZE = 100;  
+        } else if (selectedPlayer.image === 'giang.jpg') {
+            PLAYER_SPEED = 400; 
+            PLAYER_DAMAGE = 100; 
+            PLAYER_SIZE = 64;  
+        } else if (selectedPlayer.image === 'duydau.jpg') {
+            PLAYER_SPEED = 350; 
+            PLAYER_DAMAGE = 80; 
+            PLAYER_SIZE = 64; 
         } else if (selectedPlayer.image === 'khai.jpg') {
-            PLAYER_SPEED = 500;
+            PLAYER_SPEED = 450;
             PLAYER_SIZE = 70; 
+            PLAYER_DAMAGE = 100; 
+        } else if (selectedPlayer.image === 'dong.jpg') {
+            PLAYER_SPEED = 300; 
+            PLAYER_DAMAGE = 100; 
+            PLAYER_SIZE = 70;
+        } else if (selectedPlayer.image === 'sonhanma.jpg') {
+            PLAYER_SPEED = 100; 
+            PLAYER_DAMAGE = 30; 
+            PLAYER_SIZE = 100; 
+        } else if (selectedPlayer.image === 'haico.jpg') {
+            PLAYER_SPEED = 500; 
             PLAYER_DAMAGE = 60; 
-        } else {
+        } else if (selectedPlayer.image === 'tung.jpg') {
+            PLAYER_SPEED = 250; 
+            PLAYER_DAMAGE = 80; 
+            PLAYER_SIZE = 80;
+        } else if (selectedPlayer.image === 'manh.jpg') {
+            PLAYER_SPEED = 300; 
+            PLAYER_DAMAGE = 60; 
+            PLAYER_SIZE = 50;
+        } else if (selectedPlayer.image === 'minhtrinh.jpg') {
+            PLAYER_DAMAGE = 100; 
+            PLAYER_SIZE = 80; 
+            PLAYER_SPEED = 250;
+        } else if (selectedPlayer.image === 'huyngoc.jpg') {
+            PLAYER_DAMAGE = 50; 
+            PLAYER_SIZE = 64; 
+            PLAYER_SPEED = 230;
+        } else if (selectedPlayer.image === 'vinh.jpg') {
+            PLAYER_DAMAGE = 35; 
+            PLAYER_SIZE = 100; 
+            PLAYER_SPEED = 150;
+        } else if (selectedPlayer.image === 'minhbui.jpg') {
+            PLAYER_DAMAGE = 60; 
+            PLAYER_SIZE = 70; 
+            PLAYER_SPEED = 250;
+        } else if (selectedPlayer.image === 'danghai.jpg') {
+            PLAYER_DAMAGE = 60; 
+            PLAYER_SIZE = 64; 
+            PLAYER_SPEED = 300;
+        } else if (selectedPlayer.image === 'dauhai.jpg') {
+            PLAYER_DAMAGE = 80; 
+            PLAYER_SIZE = 70; 
+            PLAYER_SPEED = 250;
+        } else if (selectedPlayer.image === 'cuong.jpg') {
+            PLAYER_DAMAGE = 50; 
+            PLAYER_SIZE = 100; 
+            PLAYER_SPEED = 100;
+        } else if (selectedPlayer.image === 'vanh.jpg') {
+            PLAYER_DAMAGE = 50; 
+            PLAYER_SIZE = 80; 
+            PLAYER_SPEED = 200;
+        }  else {
             PLAYER_SIZE = 64; 
             PLAYER_SPEED = 200;
             PLAYER_DAMAGE = 30; 
@@ -59,13 +119,33 @@ function loadCharacterImages() {
 // Cập nhật giá trị MAX_HEALTH cho các nhân vật
 function updateCharacterHealth() {
     if (player.image.src.endsWith('duydau.jpg')) {
-        player.health = 250; 
-        PLAYER_MAX_HEALTH = 250; // Cập nhật MAX_HEALTH cho nhân vật chính
+        player.health = 300; 
+        PLAYER_MAX_HEALTH = 300; 
     } else if (player.image.src.endsWith('khai.jpg')) {
-        player.health = 200;
-        PLAYER_MAX_HEALTH = 200; 
+        player.health = 250;
+        PLAYER_MAX_HEALTH = 250; 
+    }
+    else if (player.image.src.endsWith('haico.jpg')) {
+        player.health = 300;
+        PLAYER_MAX_HEALTH = 300; 
     } 
     else if (player.image.src.endsWith('hieu3lit.jpg')) {
+        player.health = 380;
+        PLAYER_MAX_HEALTH = 380; 
+    } 
+    else if (player.image.src.endsWith('namdelta.jpg')) {
+        player.health = 300;
+        PLAYER_MAX_HEALTH = 300; 
+    }
+    else if (player.image.src.endsWith('giang.jpg')) {
+        player.health = 220;
+        PLAYER_MAX_HEALTH = 220; 
+    }  
+    else if (player.image.src.endsWith('dong.jpg')) {
+        player.health = 300;
+        PLAYER_MAX_HEALTH = 300; 
+    }
+    else if (player.image.src.endsWith('minhbui.jpg')) {
         player.health = 300;
         PLAYER_MAX_HEALTH = 300; 
     } 
@@ -74,13 +154,30 @@ function updateCharacterHealth() {
         PLAYER_MAX_HEALTH = 500; 
     } 
     else if (player.image.src.endsWith('cuong.jpg')) {
-        player.health = 400;
-        PLAYER_MAX_HEALTH = 400; 
+        player.health = 450;
+        PLAYER_MAX_HEALTH = 450; 
     } 
     else if (player.image.src.endsWith('vinh.jpg')) {
         player.health = 400;
         PLAYER_MAX_HEALTH = 400; 
-    } else {
+    } 
+    else if (player.image.src.endsWith('minhtrinh.jpg')) {
+        player.health = 350;
+        PLAYER_MAX_HEALTH = 350; 
+    }
+    else if (player.image.src.endsWith('huyngoc.jpg')) {
+        player.health = 350;
+        PLAYER_MAX_HEALTH = 350; 
+    } 
+    else if (player.image.src.endsWith('vanh.jpg')) {
+        player.health = 300;
+        PLAYER_MAX_HEALTH = 300; 
+    } 
+    else if (player.image.src.endsWith('dauhai.jpg')) {
+        player.health = 250;
+        PLAYER_MAX_HEALTH = 250; 
+    } 
+    else {
         player.health = PLAYER_MAX_HEALTH;
     }
 }
@@ -489,5 +586,3 @@ function resetGame() {
 
     gameLoop();
 }
-
-
