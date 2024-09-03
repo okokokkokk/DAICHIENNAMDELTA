@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đại Chiến Nam Delta</title>
+    <link rel="website icon" type="jpg" href="logo-a2.jpg">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            color: rgb(0, 0, 0);
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(https://media.istockphoto.com/id/113494458/vi/anh/l%E1%BB%ADa-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-n%E1%BB%81n-%C4%91en.jpg?s=612x612&w=0&k=20&c=3KWiTBLBh3Tn7I05fK_Yq4N8fixFbyATYFxgG-w21HA=);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }   
+        .container {
+            text-align: center;
+        }
+        .chedo {
+            background-color: #eeff00;
+            padding: 0 10px;
+            border: 2px #000 solid;
+            border-radius: 10px;
+        }
+        button {
+            width: 150px;
+            height: 50px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .supereasy {
+            background-color: #3b88ec;
+            color: white;
+        }
+        .easy {
+            background-color: #8bc34a;
+            color: white;
+        }
+        .medium {
+            background-color: #ff9800;
+            color: white;
+        }
+        .hard {
+            background-color: #f44336;
+            color: white;
+        }
+        .back {
+            background-color: #607d8b;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chedo">
+            <h1>Chọn Chế Độ</h1>
+        </div>
+        <button class="supereasy" onclick="location.href='vs10.html'">1 vs 10</button>
+        <button class="easy" onclick="location.href='vs20.html'">1 vs 20</button>
+        <button class="medium" onclick="location.href='vs50.html'">1 vs 50</button>
+        <button class="hard" onclick="location.href='vs100.html'">1 vs 100</button>
+        <button class="back" onclick="location.href='choose.html'">Quay lại</button>
+    </div>
+</body>
+</html>

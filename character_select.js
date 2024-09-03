@@ -91,7 +91,7 @@ function startGame() {
     if (selectedPlayer && selectedEnemy) {
         localStorage.setItem('selectedPlayer', JSON.stringify(selectedPlayer));
         localStorage.setItem('selectedEnemy', JSON.stringify(selectedEnemy));
-        window.location.href = 'game.html'; // Chuyển đến trang trò chơi chính
+        window.location.href = 'chedo.html'; // Chuyển đến trang trò chơi chính
     } else {
         alert('Vui lòng chọn cả nhân vật chính và đối thủ trước khi bắt đầu.');
     }
