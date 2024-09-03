@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    background-image: 
+    url(https://media.istockphoto.com/id/113494458/vi/anh/l%E1%BB%ADa-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-n%E1%BB%81n-%C4%91en.jpg?s=612x612&w=0&k=20&c=3KWiTBLBh3Tn7I05fK_Yq4N8fixFbyATYFxgG-w21HA=);
+    background-size: contain;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 50px;
+    background-color: #ffea00; /* Màu nền đỏ */
+    color: rgb(39, 38, 38);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #e53935; /* Màu nền khi hover */
+}
+
+h1 {
+    color: #fefefe;
+    text-shadow: 2px 2px 4px rgb(110, 95, 95);
+    font-size: 40px;
+}
+
+.theh2 {
+   background-color:rgb(248, 166, 179);
+   width: 30%;    
+   margin: 0 auto;
+   padding: 3px 0 3px 0;
+   box-sizing: border-box;
+   border: 2px #000 solid;
+   border-radius: 10px;
+}
+
+.character-tier {
+    margin-bottom: 30px;
+}
+
+.character-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f900;
+    background-image: 
+    url(https://png.pngtree.com/thumb_back/fh260/background/20201014/pngtree-burning-flame-fire-background-banner-image_410845.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 8px;
+    border: 2px solid rgb(255, 238, 0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    padding: 15px;
+}
+
+
+.character-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+/* Bậc SS - Viền vàng */
+.character-tier:nth-of-type(2) .character-card img {
+    border: 2px solid gold; /* Viền vàng cho nhân vật bậc SS */
+}
+
+/* Bậc S - Viền vàng */
+.character-tier:nth-of-type(3) .character-card img {
+    border: 2px solid gold; /* Viền vàng cho nhân vật bậc S */
+}
+
+/* Bậc A - Viền đỏ */
+.character-tier:nth-of-type(4) .character-card img {
+    border: 2px solid red; /* Viền đỏ cho nhân vật bậc A */
+}
+
+/* Bậc B - Viền xanh dương */
+.character-tier:nth-of-type(5) .character-card img {
+    border: 2px solid rgb(42, 42, 239); /* Viền xanh dương cho nhân vật bậc B */
+}
+
+/* Bậc C - Viền xanh lá */
+.character-tier:nth-of-type(6) .character-card img {
+    border: 2px solid green; /* Viền xanh lá cho nhân vật bậc C */
+}
+
+
+.character-cardA img {
+    border: 2px solid red;
+}
+
+.character-info {
+    text-align: left;
+}
+
+.character-info h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #f2e4e4;
+}
+
+.character-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #f9dfdf;
+}
