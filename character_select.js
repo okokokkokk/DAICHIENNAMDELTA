@@ -23,6 +23,12 @@ const playerCharacters = [
     { id: 'player22', name: 'Minh Hạ', image: 'minhha.jpg' },
     { id: 'player23', name: 'Minh Bùi', image: 'minhbui.jpg' },
     { id: 'player24', name: 'Huy Trung Kì', image: 'huyngoc.jpg' },
+    { id: 'player25', name: 'Duy Nguyên', image: 'duynguyen.jpg' },
+    { id: 'player26', name: 'Hoàng Gay', image: 'hoang.jpg' },
+    { id: 'player27', name: 'Duy Bá', image: 'duyba.jpg' },
+    { id: 'player28', name: 'Đình Anh', image: 'dinhanh.jpg' },
+    { id: 'player29', name: 'Phong XD', image: 'phong.jpg' },
+
     // Thêm các nhân vật chính khác ở đây
 ];
 
@@ -51,6 +57,12 @@ const enemyCharacters = [
     { id: 'enemy22', name: 'Hạ Minh', image: 'minhha.jpg' },
     { id: 'enemy23', name: 'Bùi Minh', image: 'minhbui.jpg' },
     { id: 'enemy24', name: 'Huy Đầu Trứng', image: 'huyngoc.jpg' },
+    { id: 'enemy25', name: 'Nguyên Duy', image: 'duynguyen.jpg' },
+    { id: 'enemy26', name: 'Gày Hoang', image: 'hoang.jpg' },
+    { id: 'enemy27', name: 'Bá Duy', image: 'duyba.jpg' },
+    { id: 'enemy28', name: 'Đình Voi', image: 'dinhanh.jpg' },
+    { id: 'enemy29', name: 'Phong', image: 'phong.jpg' },
+
     // Thêm các đối thủ khác ở đây
 ];
 

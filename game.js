@@ -41,6 +41,14 @@ function loadCharacterImages() {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 300; 
             PLAYER_SIZE = 100;  
+        } else if (selectedPlayer.image === 'duyba.jpg') {
+            PLAYER_SPEED = 350; 
+            PLAYER_DAMAGE = 200; 
+            PLAYER_SIZE = 100;  
+        } else if (selectedPlayer.image === 'dinhanh.jpg') {
+            PLAYER_SPEED = 70; 
+            PLAYER_DAMAGE = 50; 
+            PLAYER_SIZE = 150;  
         } else if (selectedPlayer.image === 'giang.jpg') {
             PLAYER_SPEED = 400; 
             PLAYER_DAMAGE = 100; 
@@ -49,6 +57,10 @@ function loadCharacterImages() {
             PLAYER_SPEED = 350; 
             PLAYER_DAMAGE = 100; 
             PLAYER_SIZE = 80; 
+        } else if (selectedPlayer.image === 'hoang.jpg') {
+            PLAYER_SPEED = 300; 
+            PLAYER_DAMAGE = 150; 
+            PLAYER_SIZE = 70; 
         } else if (selectedPlayer.image === 'khai.jpg') {
             PLAYER_SPEED = 450;
             PLAYER_SIZE = 70; 
@@ -92,6 +104,10 @@ function loadCharacterImages() {
             PLAYER_DAMAGE = 60; 
             PLAYER_SIZE = 64; 
             PLAYER_SPEED = 300;
+        } else if (selectedPlayer.image === 'phong.jpg') {
+            PLAYER_DAMAGE = 50; 
+            PLAYER_SIZE = 80; 
+            PLAYER_SPEED = 300;
         } else if (selectedPlayer.image === 'dauhai.jpg') {
             PLAYER_DAMAGE = 80; 
             PLAYER_SIZE = 70; 
@@ -126,6 +142,22 @@ function updateCharacterHealth() {
     } else if (player.image.src.endsWith('khai.jpg')) {
         player.health = 250;
         PLAYER_MAX_HEALTH = 250; 
+    }
+    else if (player.image.src.endsWith('dinhanh.jpg')) {
+        player.health = 609;
+        PLAYER_MAX_HEALTH = 609; 
+    }
+    else if (player.image.src.endsWith('phong.jpg')) {
+        player.health = 219;
+        PLAYER_MAX_HEALTH = 219; 
+    }
+    else if (player.image.src.endsWith('hoang.jpg')) {
+        player.health = 250;
+        PLAYER_MAX_HEALTH = 250; 
+    }
+    else if (player.image.src.endsWith('duyba.jpg')) {
+        player.health = 400;
+        PLAYER_MAX_HEALTH = 400; 
     }
     else if (player.image.src.endsWith('haico.jpg')) {
         player.health = 300;
