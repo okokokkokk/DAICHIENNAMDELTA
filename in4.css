@@ -73,6 +73,9 @@ h1 {
     margin-right: 20px;
 }
 /* Bậc SS - Viền vàng */
+.character-tier:nth-of-type(1) .character-card img {
+    border: 2px solid gold; /* Viền vàng cho nhân vật bậc SS */
+}
 .character-tier:nth-of-type(2) .character-card img {
     border: 2px solid gold; /* Viền vàng cho nhân vật bậc SS */
 }
@@ -109,7 +112,7 @@ h1 {
 .character-info h3 {
     margin: 0;
     font-size: 24px;
-    color: #f2e4e4;
+    color: #f9e8e8;
 }
 
 .character-info p {
