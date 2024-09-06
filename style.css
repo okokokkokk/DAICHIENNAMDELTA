@@ -117,29 +117,6 @@ canvas {
     background-color: rgba(255, 255, 0, 0.8);
 }
 
-#attackButton {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 2px solid #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: #000;
-    cursor: pointer;
-    z-index: 10;
-    position: fixed; /* Đảm bảo nút luôn hiển thị trên màn hình */
-    outline: none; /* Loại bỏ đường viền mặc định của nút */
-    touch-action: manipulation; /* Ngăn chặn zoom */
-    -webkit-touch-callout: none; /* Ngăn chặn menu context */
-}
-
-#attackButton:active {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 .button-container {
     display: flex;
     justify-content: center;
@@ -181,7 +158,56 @@ canvas {
     background-color: #e53935;
 }
 
-/* Responsive cho thiết bị di động */
+/* Định nghĩa CSS cho nút SkillButton */
+/* Định nghĩa CSS cho nút SkillButton */
+#SkillButton {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+    z-index: 20; /* Đặt z-index cao hơn để nút SkillButton nằm trên nút attackButton */
+    position: fixed; /* Đảm bảo nút luôn hiển thị trên màn hình */
+    outline: none; /* Loại bỏ đường viền mặc định của nút */
+    touch-action: manipulation; /* Ngăn chặn zoom */
+    -webkit-touch-callout: none; /* Ngăn chặn menu context */
+}
+
+#SkillButton:active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Định nghĩa CSS cho nút attackButton */
+#attackButton {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+    z-index: 10; /* Đảm bảo nút attackButton nằm dưới nút SkillButton */
+    position: fixed; /* Đảm bảo nút luôn hiển thị trên màn hình */
+    outline: none; /* Loại bỏ đường viền mặc định của nút */
+    touch-action: manipulation; /* Ngăn chặn zoom */
+    -webkit-touch-callout: none; /* Ngăn chặn menu context */
+}
+
+#attackButton:active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive CSS */
 @media (orientation: landscape) {
     canvas {
         width: 100vw;
@@ -193,8 +219,13 @@ canvas {
         left: 10px;
     }
     
+    #SkillButton {
+        bottom: 20%; /* Đặt SkillButton ở trên attackButton với khoảng cách */
+        right: 10px;
+    }
+
     #attackButton {
-        bottom: 15%;
+        bottom: 10%;
         right: 10px;
     }
 }
@@ -210,8 +241,13 @@ canvas {
         left: 10px;
     }
 
+    #SkillButton {
+        bottom: 100%; /* Đặt SkillButton ở trên attackButton với khoảng cách */
+        right: 10px;
+    }
+
     #attackButton {
-        bottom: 10%;
+        bottom: 100%;
         right: 10px;
     }
 }

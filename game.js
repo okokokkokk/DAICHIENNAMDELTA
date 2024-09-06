@@ -1,3 +1,26 @@
+const bombImage = new Image();
+bombImage.src = 'quabom.jpg';
+const bombExplosionVideo = document.createElement('video');
+bombExplosionVideo.src = 'bomno.gif';
+bombExplosionVideo.style.display = 'none';
+document.body.appendChild(bombExplosionVideo);
+let bombThrown = false;
+let bombX = 0;
+let bombY = 0;
+let bombDirection = '';
+let bombSpeed = 5;
+let bombExplosionPlaying = false;
+let chiso = 0;
+
+//map for ss
+const mapImage = new Image()
+mapImage.src = 'mapforss.jpg'
+let mapThrown = false;
+let mapX = 0;
+let mapY = 0;
+let mapDirection = '';
+let mapSpeed = 5;
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const width = canvas.width;
@@ -41,6 +64,12 @@ function loadCharacterImages() {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 300; 
             PLAYER_SIZE = 100;  
+            chiso = 2;
+        } else if (selectedPlayer.image === 'hanhbui.jpg') {
+            PLAYER_SPEED = 500; 
+            PLAYER_DAMAGE = 300; 
+            PLAYER_SIZE = 100;  
+            chiso = 1;
         } else if (selectedPlayer.image === 'duyba.jpg') {
             PLAYER_SPEED = 350; 
             PLAYER_DAMAGE = 200; 
@@ -143,6 +172,10 @@ function updateCharacterHealth() {
         player.health = 250;
         PLAYER_MAX_HEALTH = 250; 
     }
+    else if (player.image.src.endsWith('hanhbui.jpg')) {
+        player.health = 500;
+        PLAYER_MAX_HEALTH = 500; 
+    }
     else if (player.image.src.endsWith('dinhanh.jpg')) {
         player.health = 609;
         PLAYER_MAX_HEALTH = 609; 
@@ -227,42 +260,9 @@ let player = {
 
 
 let enemies = [];
-let touchControls = {
-    up: false,
-    down: false,
-    left: false,
-    right: false
-};
+
 
 document.getElementById('attackButton').addEventListener('click', attack);
-
-function setupTouchControls() {
-    const controlButtons = {
-        up: document.querySelector('.control-button.up'),
-        down: document.querySelector('.control-button.down'),
-        left: document.querySelector('.control-button.left'),
-        right: document.querySelector('.control-button.right')
-    };
-
-    Object.keys(controlButtons).forEach(direction => {
-        controlButtons[direction].addEventListener('mousedown', () => {
-            touchControls[direction] = true;
-        });
-        controlButtons[direction].addEventListener('mouseup', () => {
-            touchControls[direction] = false;
-        });
-    });
-
-    // Đảm bảo các sự kiện touch cũng được xử lý
-    Object.keys(controlButtons).forEach(direction => {
-        controlButtons[direction].addEventListener('touchstart', () => {
-            touchControls[direction] = true;
-        });
-        controlButtons[direction].addEventListener('touchend', () => {
-            touchControls[direction] = false;
-        });
-    });
-}
 
 document.getElementById('playAgainWin').addEventListener('click', resetGame);
 document.getElementById('playAgainLose').addEventListener('click', resetGame);
@@ -285,20 +285,33 @@ function setupTouchControls() {
         up: document.querySelector('.control-button.up'),
         down: document.querySelector('.control-button.down'),
         left: document.querySelector('.control-button.left'),
-        right: document.querySelector('.control-button.right')
+        right: document.querySelector('.control-button.right'),
+        attack: document.querySelector('.control-button.attack')
     };
 
     Object.keys(controlButtons).forEach(direction => {
         controlButtons[direction].addEventListener('touchstart', () => {
-            event.preventDefault(); // Ngăn chặn zoom
+            event.preventDefault(); // Prevent zoom
             touchControls[direction] = true;
         });
         controlButtons[direction].addEventListener('touchend', () => {
-            event.preventDefault(); // Ngăn chặn zoom
+            event.preventDefault(); // Prevent zoom
             touchControls[direction] = false;
         });
     });
+
+    controlButtons.attack.addEventListener('touchstart', () => {
+        event.preventDefault(); // Prevent zoom
+        attack();
+    });
 }
+
+let touchControls = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+};
 
 let keyPressed = ''; // Khai báo biến keyPressed ở cấp toàn cục
 
@@ -353,6 +366,9 @@ document.addEventListener('keydown', (e) => {
             keyPressed = 'j'; // Cập nhật keyPressed khi phím 'j' được nhấn
             attack(); // Gọi hàm attack khi phím 'j' được nhấn
             break;
+        case 'u':
+            throwBomb()
+            break;
     }
 });
 
@@ -376,6 +392,22 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+document.getElementById('SkillButton').addEventListener('click', throwBomb);
+
+// hàm ném bom
+function throwBomb() {
+    if (chiso === 2 && !bombThrown) {
+      bombThrown = true;
+      bombX = player.x;
+      bombY = player.y;
+      bombDirection = touchControls['left'] ? 'left' : 'right';
+    } else if (chiso === 1 && !mapThrown) {
+      mapThrown = true;
+      mapX = player.x;
+      mapY = player.y;
+      mapDirection = touchControls['left'] ? 'left' : 'right';
+    }
+}
 // Update game state
 function updateHealthBars() {
     const playerHealthPercent = player.health / PLAYER_MAX_HEALTH * 100;
@@ -413,6 +445,81 @@ function update() {
     player.x = Math.max(0, Math.min(width - player.size, player.x));
     player.y = Math.max(0, Math.min(height - player.size, player.y));
 
+    // Cập nhật vị trí của quả bom
+    if (bombThrown) {
+        if (bombDirection === 'left') {
+            bombX -= bombSpeed;
+        } else {
+            bombX += bombSpeed;
+        }
+
+        // Kiểm tra va chạm giữa quả bom và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(bombX - enemy.x) < ENEMY_SIZE && Math.abs(bombY - enemy.y) < ENEMY_SIZE) {
+                bombThrown = false;
+                enemies.splice(index, 2);
+                score += 1000;
+    
+                // Tạo một phần tử img mới cho hiệu ứng nổ
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (bombX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (bombY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+    
+                // Xóa hình ảnh hiệu ứng nổ sau một khoảng thời gian nhất định
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); // Thời gian hiển thị hiệu ứng nổ (ms)
+            }
+        });
+    
+
+        // Kiểm tra nếu quả bom đã đi quá 200px
+        if (Math.abs(bombX - player.x) > 500) {
+            bombThrown = false;
+        }
+    }
+    // Cập nhật vị trí của "mapforss.jpg"
+    if (mapThrown) {
+        if (mapDirection === 'left') {
+            mapX -= mapSpeed;
+        } else {
+            mapX += mapSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(mapX - enemy.x) < ENEMY_SIZE && Math.abs(mapY - enemy.y) < ENEMY_SIZE) {
+                mapThrown = false;
+                enemies.splice(index, 2);
+                score += 1000;
+
+                // Tạo một phần tử img mới cho hiệu ứng nổ
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (mapX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (mapY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                // Xóa hình ảnh hiệu ứng nổ sau một khoảng thời gian nhất định
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); // Thời gian hiển thị hiệu ứng nổ (ms)
+            }
+        });
+
+        // Kiểm tra nếu "mapforss.jpg" đã đi quá 200px
+        if (Math.abs(mapX - player.x) > 500) {
+            mapThrown = false;
+        }
+    }
     enemies.forEach((enemy) => {
         if (enemy.direction === 'left') enemy.x -= enemy.speed;
         if (enemy.direction === 'right') enemy.x += enemy.speed;
@@ -523,7 +630,23 @@ function draw() {
 
     // Vẽ thanh kiếm
     drawSwords();
+    
+    // Vẽ quả bom
+    if (bombThrown) {
+        ctx.drawImage(bombImage, bombX, bombY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    // Vẽ "mapforss.jpg"
+    if (mapThrown) {
+        ctx.drawImage(mapImage, mapX, mapY, PLAYER_SIZE, PLAYER_SIZE);
+    }
 
+    // Hiển thị hiệu ứng nổ
+    if (bombExplosionPlaying) {
+        ctx.drawImage(bombExplosionVideo, bombExplosionX, bombExplosionY, PLAYER_SIZE, PLAYER_SIZE);
+        if (bombExplosionVideo.ended) {
+            bombExplosionPlaying = false;
+        }
+    }
     // Vẽ kẻ thù
     enemies.forEach((enemy) => {
         ctx.drawImage(enemy.image, enemy.x, enemy.y, enemy.size, enemy.size);
@@ -586,7 +709,17 @@ function resetGame() {
     // Gọi hàm để cập nhật các thuộc tính của player từ localStorage
     loadCharacterImages();
     updateCharacterHealth(); // Cập nhật sức khỏe của nhân vật
+    
+    bombThrown = false;
+    bombX = 0;
+    bombY = 0;
+    bombDirection = '';
 
+    // Đặt lại trạng thái của "mapforss.jpg"
+    mapThrown = false;
+    mapX = 0;
+    mapY = 0;
+    mapDirection = '';
     // Khởi tạo lại player sau khi loadCharacterImages đã cập nhật các thuộc tính
     player = {
         x: width / 2,

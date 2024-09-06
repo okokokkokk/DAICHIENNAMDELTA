@@ -6,6 +6,7 @@ const playerCharacters = [
     { id: 'player5', name: 'Vinh Surprise', image: 'vinh.jpg' },
     { id: 'player6', name: 'Hoan Gay', image: 'hoan.jpg' },
     { id: 'player7', name: 'Hiếu Dubai', image: 'hieu3lit.jpg' },
+    { id: 'player30', name: 'Mrs Hạnh', image: 'hanhbui.jpg' },
     { id: 'player8', name: 'Thầy Cường', image: 'cuong.jpg' },
     { id: 'player9', name: 'Đẳng Hai', image: 'danghai.jpg' },
     { id: 'player10', name: 'Dương Đăng', image: 'dang.jpg' },
@@ -35,6 +36,7 @@ const playerCharacters = [
 const enemyCharacters = [
     { id: 'enemy1', name: 'Nam Delta', image: 'namdelta.jpg' },
     { id: 'enemy2', name: 'Nam Đao', image: 'namdao.jpg' },
+    { id: 'enemy30', name: 'Cô Hạnh Bùi', image: 'hanhbui.jpg' },
     { id: 'enemy3', name: 'Vinh Bất Ngờ', image: 'vinh.jpg' },
     { id: 'enemy4', name: 'Hoàn Seg', image: 'hoan.jpg' },
     { id: 'enemy5', name: 'Khải Lol', image: 'khai.jpg' },
