@@ -3,6 +3,7 @@
 1. Chơi đơn:
 	- "w","a","s","s" để di chuyển. (Nếu không di chuyển được tắt Caps Lock)
 	- "j" để tấn công.
+	- "u" để dùng skill thường.
 	- Sau 1.5s người chơi sẽ được hồi 30% lượng máu đã mất.
 
 2. Chơi đôi:

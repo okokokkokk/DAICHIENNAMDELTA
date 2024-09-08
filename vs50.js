@@ -838,7 +838,7 @@ function resetGame() {
 
     // Khởi tạo danh sách kẻ địch
     enemies = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 50; i++) {
         enemies.push({
             x: Math.random() * (width - ENEMY_SIZE),
             y: Math.random() * (height - ENEMY_SIZE),
