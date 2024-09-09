@@ -30,6 +30,105 @@ let loliY = 0;
 let loliDirection = '';
 let loliSpeed = 5;
 
+//namdam
+const namdamImage = new Image()
+namdamImage.src = 'namdam.jpg'
+let namdamThrown = false;
+let namdamX = 0;
+let namdamY = 0;
+let namdamDirection = '';
+let namdamSpeed = 5;
+
+//chidori
+const chidoriImage = new Image()
+chidoriImage.src = 'chidori.jpg'
+let chidoriThrown = false;
+let chidoriX = 0;
+let chidoriY = 0;
+let chidoriDirection = '';
+let chidoriSpeed = 5;
+
+//messi
+const messiImage = new Image()
+messiImage.src = 'messi.jpg'
+let messiThrown = false;
+let messiX = 0;
+let messiY = 0;
+let messiDirection = '';
+let messiSpeed = 5;
+
+//mu
+const muImage = new Image()
+muImage.src = 'mu.jpg'
+let muThrown = false;
+let muX = 0;
+let muY = 0;
+let muDirection = '';
+let muSpeed = 5;
+
+//shit
+const shitImage = new Image()
+shitImage.src = 'shit.jpg'
+let shitThrown = false;
+let shitX = 0;
+let shitY = 0;
+let shitDirection = '';
+let shitSpeed = 5;
+
+//dau
+const dauImage = new Image()
+dauImage.src = 'dau.jpg'
+let dauThrown = false;
+let dauX = 0;
+let dauY = 0;
+let dauDirection = '';
+let dauSpeed = 5;
+
+//violin
+const violinImage = new Image()
+violinImage.src = 'violin.jpg'
+let violinThrown = false;
+let violinX = 0;
+let violinY = 0;
+let violinDirection = '';
+let violinSpeed = 5;
+
+//voi
+const voiImage = new Image()
+voiImage.src = 'voi.jpg'
+let voiThrown = false;
+let voiX = 0;
+let voiY = 0;
+let voiDirection = '';
+let voiSpeed = 5;
+
+//lốc xoáy
+const phongImage = new Image()
+phongImage.src = 'locxoay.jpg'
+let phongThrown = false;
+let phongX = 0;
+let phongY = 0;
+let phongDirection = '';
+let phongSpeed = 5;
+
+//vinh
+const vinhImage = new Image()
+vinhImage.src = 'vinh.jpg'
+let vinhThrown = false;
+let vinhX = 0;
+let vinhY = 0;
+let vinhDirection = '';
+let vinhSpeed = 5;
+
+//sonhanma
+const sonImage = new Image()
+sonImage.src = 'sonhanma.jpg'
+let sonThrown = false;
+let sonX = 0;
+let sonY = 0;
+let sonDirection = '';
+let sonSpeed = 5;
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const width = canvas.width;
@@ -68,7 +167,8 @@ function loadCharacterImages() {
         if (selectedPlayer.image === 'hieu3lit.jpg') {
             PLAYER_SIZE = 100; 
             PLAYER_SPEED = 380;
-            PLAYER_DAMAGE = 200; 
+            PLAYER_DAMAGE = 200;
+            chiso = 'namdam'; 
         } else if (selectedPlayer.image === 'namdelta.jpg') {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 300; 
@@ -82,11 +182,13 @@ function loadCharacterImages() {
         } else if (selectedPlayer.image === 'duyba.jpg') {
             PLAYER_SPEED = 350; 
             PLAYER_DAMAGE = 200; 
-            PLAYER_SIZE = 100;  
+            PLAYER_SIZE = 100;
+            chiso = 'chidori'; 
         } else if (selectedPlayer.image === 'dinhanh.jpg') {
             PLAYER_SPEED = 70; 
             PLAYER_DAMAGE = 50; 
             PLAYER_SIZE = 150;  
+            chiso = 'voi';
         } else if (selectedPlayer.image === 'giang.jpg') {
             PLAYER_SPEED = 400; 
             PLAYER_DAMAGE = 100; 
@@ -95,6 +197,7 @@ function loadCharacterImages() {
             PLAYER_SPEED = 350; 
             PLAYER_DAMAGE = 100; 
             PLAYER_SIZE = 80; 
+            chiso = 'dau';
         } else if (selectedPlayer.image === 'hoang.jpg') {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 150; 
@@ -110,7 +213,8 @@ function loadCharacterImages() {
         } else if (selectedPlayer.image === 'sonhanma.jpg') {
             PLAYER_SPEED = 100; 
             PLAYER_DAMAGE = 30; 
-            PLAYER_SIZE = 100; 
+            PLAYER_SIZE = 100;
+            chiso = 'violin'; 
         } else if (selectedPlayer.image === 'haico.jpg') {
             PLAYER_SPEED = 500; 
             PLAYER_DAMAGE = 60; 
@@ -122,6 +226,7 @@ function loadCharacterImages() {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 60; 
             PLAYER_SIZE = 50;
+            chiso = 'shit';
         } else if (selectedPlayer.image === 'minhtrinh.jpg') {
             PLAYER_DAMAGE = 100; 
             PLAYER_SIZE = 80; 
@@ -134,6 +239,7 @@ function loadCharacterImages() {
             PLAYER_DAMAGE = 35; 
             PLAYER_SIZE = 100; 
             PLAYER_SPEED = 150;
+            chiso = 'messi';
         } else if (selectedPlayer.image === 'minhbui.jpg') {
             PLAYER_DAMAGE = 60; 
             PLAYER_SIZE = 70; 
@@ -146,21 +252,27 @@ function loadCharacterImages() {
             PLAYER_DAMAGE = 50; 
             PLAYER_SIZE = 80; 
             PLAYER_SPEED = 300;
+            chiso = 'phong';
         } else if (selectedPlayer.image === 'dauhai.jpg') {
             PLAYER_DAMAGE = 80; 
             PLAYER_SIZE = 70; 
             PLAYER_SPEED = 250;
+            chiso = 'vinh';
         } else if (selectedPlayer.image === 'cuong.jpg') {
             PLAYER_DAMAGE = 50; 
             PLAYER_SIZE = 100; 
             PLAYER_SPEED = 100;
+            chiso = 'son';
         } else if (selectedPlayer.image === 'vanh.jpg') {
             PLAYER_DAMAGE = 50; 
             PLAYER_SIZE = 80; 
             PLAYER_SPEED = 200;
+            chiso = 'mu';
         } else if (selectedPlayer.image === 'hoan.jpg') {
             PLAYER_DAMAGE = 100; 
             chiso = 3;
+        } else if (selectedPlayer.image === 'nhodai.jpg') {
+            chiso = 'shit'; 
         } else {
             PLAYER_SIZE = 64; 
             PLAYER_SPEED = 200;
@@ -460,7 +572,73 @@ function throwBomb() {
       mapX = player.x;
       mapY = player.y;
       mapDirection = touchControls['left'] ? 'left' : 'right';
-    } else if (chiso === 3 && !loliThrown) {
+    } else if (chiso === 'shit' && !shitThrown) {
+        shitThrown = true;
+        shitX = player.x;
+        shitY = player.y;
+        shitDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'namdam' && !namdamThrown) {
+        namdamThrown = true;
+        namdamX = player.x;
+        namdamY = player.y;
+        namdamDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'chidori' && !chidoriThrown) {
+        chidoriThrown = true;
+        chidoriX = player.x;
+        chidoriY = player.y;
+        chidoriDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'messi' && !messiThrown) {
+        messiThrown = true;
+        messiX = player.x;
+        messiY = player.y;
+        messiDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'mu' && !muThrown) {
+        muThrown = true;
+        muX = player.x;
+        muY = player.y;
+        muDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'vinh' && !vinhThrown) {
+        vinhThrown = true;
+        vinhX = player.x;
+        vinhY = player.y;
+        vinhDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'son' && !sonThrown) {
+        sonThrown = true;
+        sonX = player.x;
+        sonY = player.y;
+        sonDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'voi' && !voiThrown) {
+        voiThrown = true;
+        voiX = player.x;
+        voiY = player.y;
+        voiDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'violin' && !violinThrown) {
+        violinThrown = true;
+        violinX = player.x;
+        violinY = player.y;
+        violinDirection = touchControls['left'] ? 'left' : 'right';
+    } 
+    else if (chiso === 'phong' && !phongThrown) {
+        phongThrown = true;
+        phongX = player.x;
+        phongY = player.y;
+        phongDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 'dau' && !dauThrown) {
+        dauThrown = true;
+        dauX = player.x;
+        dauY = player.y;
+        dauDirection = touchControls['left'] ? 'left' : 'right';
+    }
+    else if (chiso === 3 && !loliThrown) {
       loliThrown = true;
       loliX = player.x;
       loliY = player.y;
@@ -615,6 +793,379 @@ function update() {
             loliThrown = false;
         }
     }
+
+    if (namdamThrown) {
+        if (namdamDirection === 'left') {
+            namdamX -= namdamSpeed;
+        } else {
+            namdamX += namdamSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(namdamX - enemy.x) < ENEMY_SIZE && Math.abs(namdamY - enemy.y) < ENEMY_SIZE) {
+                namdamThrown = false;
+                enemies.splice(index, 2);
+                score += 2000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (namdamX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (namdamY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(namdamX - player.x) > 500) {
+            namdamThrown = false;
+        }
+    }
+
+    if (chidoriThrown) {
+        if (chidoriDirection === 'left') {
+            chidoriX -= chidoriSpeed;
+        } else {
+            chidoriX += chidoriSpeed;
+        }
+
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(chidoriX - enemy.x) < ENEMY_SIZE && Math.abs(chidoriY - enemy.y) < ENEMY_SIZE) {
+                chidoriThrown = false;
+                enemies.splice(index, 2);
+                score += 2000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (chidoriX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (chidoriY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(chidoriX - player.x) > 500) {
+            chidoriThrown = false;
+        }
+    }
+
+    if (messiThrown) {
+        if (messiDirection === 'left') {
+            messiX -= messiSpeed;
+        } else {
+            messiX += messiSpeed;
+        }
+
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(messiX - enemy.x) < ENEMY_SIZE && Math.abs(messiY - enemy.y) < ENEMY_SIZE) {
+                messiThrown = false;
+                enemies.splice(index, 1);
+                score += 1000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (messiX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (messiY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(messiX - player.x) > 500) {
+            messiThrown = false;
+        }
+    }
+
+    if (muThrown) {
+        if (muDirection === 'left') {
+            muX -= muSpeed;
+        } else {
+            muX += muSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(muX - enemy.x) < ENEMY_SIZE && Math.abs(muY - enemy.y) < ENEMY_SIZE) {
+                muThrown = false;
+                enemies.splice(index, 2);
+                score += 1000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (muX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (muY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(muX - player.x) > 500) {
+            muThrown = false;
+        }
+    }
+
+    if (vinhThrown) {
+        if (vinhDirection === 'left') {
+            vinhX -= vinhSpeed;
+        } else {
+            vinhX += vinhSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(vinhX - enemy.x) < ENEMY_SIZE && Math.abs(vinhY - enemy.y) < ENEMY_SIZE) {
+                vinhThrown = false;
+                enemies.splice(index, 1);
+                score += 500;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (vinhX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (vinhY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(vinhX - player.x) > 500) {
+            vinhThrown = false;
+        }
+    }
+
+    if (sonThrown) {
+        if (sonDirection === 'left') {
+            sonX -= sonSpeed;
+        } else {
+            sonX += sonSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(sonX - enemy.x) < ENEMY_SIZE && Math.abs(sonY - enemy.y) < ENEMY_SIZE) {
+                sonThrown = false;
+                enemies.splice(index, 1);
+                score += 500;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (sonX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (sonY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(sonX - player.x) > 500) {
+            sonThrown = false;
+        }
+    }
+
+    if (voiThrown) {
+        if (voiDirection === 'left') {
+            voiX -= voiSpeed;
+        } else {
+            voiX += voiSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(voiX - enemy.x) < ENEMY_SIZE && Math.abs(voiY - enemy.y) < ENEMY_SIZE) {
+                voiThrown = false;
+                enemies.splice(index, 1);
+                score += 500;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (voiX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (voiY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(voiX - player.x) > 500) {
+            voiThrown = false;
+        }
+    }
+
+    if (phongThrown) {
+        if (phongDirection === 'left') {
+            phongX -= phongSpeed;
+        } else {
+            phongX += phongSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(phongX - enemy.x) < ENEMY_SIZE && Math.abs(phongY - enemy.y) < ENEMY_SIZE) {
+                phongThrown = false;
+                enemies.splice(index, 2);
+                score += 1000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (phongX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (phongY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(phongX - player.x) > 500) {
+            phongThrown = false;
+        }
+    }
+
+    if (dauThrown) {
+        if (dauDirection === 'left') {
+            dauX -= dauSpeed;
+        } else {
+            dauX += dauSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(dauX - enemy.x) < ENEMY_SIZE && Math.abs(dauY - enemy.y) < ENEMY_SIZE) {
+                dauThrown = false;
+                enemies.splice(index, 2);
+                score += 1000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (dauX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (dauY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(dauX - player.x) > 500) {
+            dauThrown = false;
+        }
+    }
+
+    if (violinThrown) {
+        if (violinDirection === 'left') {
+            violinX -= violinSpeed;
+        } else {
+            violinX += violinSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(violinX - enemy.x) < ENEMY_SIZE && Math.abs(violinY - enemy.y) < ENEMY_SIZE) {
+                violinThrown = false;
+                enemies.splice(index, 1);
+                score += 300;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (violinX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (violinY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(violinX - player.x) > 500) {
+            violinThrown = false;
+        }
+    }
+
+    if (shitThrown) {
+        if (shitDirection === 'left') {
+            shitX -= shitSpeed;
+        } else {
+            shitX += shitSpeed;
+        }
+
+        // Kiểm tra va chạm giữa "mapforss.jpg" và kẻ địch
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(shitX - enemy.x) < ENEMY_SIZE && Math.abs(shitY - enemy.y) < ENEMY_SIZE) {
+                shitThrown = false;
+                enemies.splice(index, 3);
+                score += 1000;
+
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (shitX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (shitY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); 
+            }
+        });
+
+        if (Math.abs(shitX - player.x) > 500) {
+            shitThrown = false;
+        }
+    }
+    
     enemies.forEach((enemy) => {
         if (enemy.direction === 'left') enemy.x -= enemy.speed;
         if (enemy.direction === 'right') enemy.x += enemy.speed;
@@ -734,9 +1285,44 @@ function draw() {
     if (mapThrown) {
         ctx.drawImage(mapImage, mapX, mapY, PLAYER_SIZE, PLAYER_SIZE);
     }
+    // Vẽ "shit.jpg"
+    if (shitThrown) {
+        ctx.drawImage(shitImage, shitX, shitY, PLAYER_SIZE, PLAYER_SIZE);
+    }
     //vẽ loli
     if (loliThrown) {
         ctx.drawImage(loliImage, loliX, loliY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+
+    if (namdamThrown) {
+        ctx.drawImage(namdamImage, namdamX, namdamY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (chidoriThrown) {
+        ctx.drawImage(chidoriImage, chidoriX, chidoriY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (messiThrown) {
+        ctx.drawImage(messiImage, messiX, messiY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (muThrown) {
+        ctx.drawImage(muImage, muX, muY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (voiThrown) {
+        ctx.drawImage(voiImage, voiX, voiY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (phongThrown) {
+        ctx.drawImage(phongImage, phongX, phongY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (vinhThrown) {
+        ctx.drawImage(vinhImage, vinhX, vinhY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (sonThrown) {
+        ctx.drawImage(sonImage, sonX, sonY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (dauThrown) {
+        ctx.drawImage(dauImage, dauX, dauY, PLAYER_SIZE, PLAYER_SIZE);
+    }
+    if (violinThrown) {
+        ctx.drawImage(violinImage, violinX, violinY, PLAYER_SIZE, PLAYER_SIZE);
     }
 
     // Hiển thị hiệu ứng nổ
@@ -809,12 +1395,12 @@ function resetGame() {
     loadCharacterImages();
     updateCharacterHealth(); // Cập nhật sức khỏe của nhân vật
     
+    //skill
     bombThrown = false;
     bombX = 0;
     bombY = 0;
     bombDirection = '';
 
-    // Đặt lại trạng thái của "mapforss.jpg"
     mapThrown = false;
     mapX = 0;
     mapY = 0;
@@ -824,6 +1410,61 @@ function resetGame() {
     loliX = 0;
     loliY = 0;
     loliDirection = '';
+
+    shitThrown = false;
+    shitX = 0;
+    shitY = 0;
+    shitDirection = '';
+
+    namdamThrown = false;
+    namdamX = 0;
+    namdamY = 0;
+    namdamDirection = '';
+
+    chidoriThrown = false;
+    chidoriX = 0;
+    chidoriY = 0;
+    chidoriDirection = '';
+
+    messiThrown = false;
+    messiX = 0;
+    messiY = 0;
+    messiDirection = '';
+
+    muThrown = false;
+    muX = 0;
+    muY = 0;
+    muDirection = '';
+
+    violinThrown = false;
+    violinX = 0;
+    violinY = 0;
+    violinDirection = '';
+
+    vinhThrown = false;
+    vinhX = 0;
+    vinhY = 0;
+    vinhDirection = '';
+
+    sonThrown = false;
+    sonX = 0;
+    sonY = 0;
+    sonDirection = '';
+
+    voiThrown = false;
+    voiX = 0;
+    voiY = 0;
+    voiDirection = '';
+
+    dauThrown = false;
+    dauX = 0;
+    dauY = 0;
+    dauDirection = '';
+
+    phongThrown = false;
+    phongX = 0;
+    phongY = 0;
+    phongDirection = '';
     // Khởi tạo lại player sau khi loadCharacterImages đã cập nhật các thuộc tính
     player = {
         x: width / 2,
