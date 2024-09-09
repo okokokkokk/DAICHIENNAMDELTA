@@ -11,6 +11,14 @@
 <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
 
+    <div id="playerHealthBar" class="health-bar">
+        <div id="playerHealth" class="health-bar-background"></div>
+    </div>
+    
+    <div id="enemyHealthBar" class="health-bar">
+        <div id="enemyHealth" class="health-bar-background"></div>
+    </div>
+
     <div class="win-screen" id="winScreen">
         <img src="win.jpg">
         <div class="message-container">
@@ -50,6 +58,43 @@
         canvas {
             display: block;
             margin: 0 auto;
+        }
+
+        .health-bar {
+            height: 10px;
+            border-radius: 5px;
+            border: 2px solid #000;
+            position: absolute;
+        }
+
+        .health-bar-background {
+            background-color: green;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        #playerHealthBar {
+            top: 10px;
+            left: 10px;
+            width: 200px;
+        }
+
+        #playerHealth {
+            background-color: green;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        #enemyHealthBar {
+            top: 10px;
+            right: 10px;
+            width: 200px;
+        }
+
+        #enemyHealth {
+            background-color: rgb(255, 0, 0);
+            height: 100%;
+            border-radius: 5px;
         }
 
         .win-screen, .game-over-screen {
@@ -143,7 +188,6 @@
             padding: 20px;
             text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6);
         }
-
 
         .button-container {
             display: flex;

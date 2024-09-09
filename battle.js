@@ -114,7 +114,7 @@ function setupGame() {
     loadCharacterImages();
 }
 
-function drawHealthBar(x, y, health, maxHealth, size) {
+function drawHealthBar(x, y, health, maxHealth, size, player) {
     const healthBarHeight = 10;
     const healthBarWidth = size;
 
@@ -126,7 +126,11 @@ function drawHealthBar(x, y, health, maxHealth, size) {
     const fillWidth = (health / maxHealth) * healthBarWidth;
 
     // Vẽ thanh máu
-    ctx.fillStyle = 'green';
+    if (player === player1) {
+        ctx.fillStyle = 'green'; // Màu xanh lá cho player1
+    } else if (player === player2) {
+        ctx.fillStyle = 'red'; // Màu đỏ cho player2
+    }
     ctx.fillRect(x, y - healthBarHeight, fillWidth, healthBarHeight);
 }
 
@@ -135,8 +139,8 @@ function drawPlayer(player, swordImageLeft, swordImageRight, isLeft) {
     ctx.drawImage(player.image, player.x, player.y, player.size, player.size);
 
     // Vẽ thanh máu của nhân vật
-    drawHealthBar(player.x, player.y, player.health, player.maxHealth, player.size);
-
+    drawHealthBar(player.x, player.y, player.health, player.maxHealth, player.size, player);
+    
     // Xác định kiếm dựa trên hướng di chuyển
     let swordImage;
     let swordX, swordY;
@@ -362,6 +366,11 @@ function showWinScreen(winner) {
     document.querySelector('.win-screen .message-container').innerText = `Người chơi thứ nhất (player 1) đã dành chiến thắng!`;
 }
 
+function updateHealthBar(player, healthBar, healthFill) {
+    const healthPercentage = (player.health / player.maxHealth) * 100;
+    healthFill.style.width = `${healthPercentage}%`;
+}
+
 function update() {
     if (gameOver) return;
 
@@ -377,6 +386,8 @@ function update() {
     drawPlayer(player2, sword1Image, sword2Image, false);
 
     drawEnemies();
+    updateHealthBar(player1, document.getElementById('playerHealthBar'), document.getElementById('playerHealth'));
+    updateHealthBar(player2, document.getElementById('enemyHealthBar'), document.getElementById('enemyHealth'));
 }
 
 function gameLoop() {
