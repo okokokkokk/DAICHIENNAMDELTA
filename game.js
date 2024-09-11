@@ -21,6 +21,15 @@ let mapY = 0;
 let mapDirection = '';
 let mapSpeed = 5;
 
+//mc
+const mcImage = new Image()
+mcImage.src = 'mc.jpg'
+let mcThrown = false;
+let mcX = 0;
+let mcY = 0;
+let mcDirection = '';
+let mcSpeed = 5;
+
 //loli
 const loliImage = new Image()
 loliImage.src = 'loli.jpg'
@@ -206,6 +215,7 @@ function loadCharacterImages() {
             PLAYER_SPEED = 450;
             PLAYER_SIZE = 70; 
             PLAYER_DAMAGE = 100; 
+            chiso = 'mc';
         } else if (selectedPlayer.image === 'dong.jpg') {
             PLAYER_SPEED = 300; 
             PLAYER_DAMAGE = 100; 
@@ -572,6 +582,11 @@ function throwBomb() {
       mapX = player.x;
       mapY = player.y;
       mapDirection = touchControls['left'] ? 'left' : 'right';
+    } else if (chiso === 'mc' && !mcThrown) {
+        mcThrown = true;
+        mcX = player.x;
+        mcY = player.y;
+        mcDirection = touchControls['left'] ? 'left' : 'right';
     } else if (chiso === 'shit' && !shitThrown) {
         shitThrown = true;
         shitX = player.x;
@@ -715,9 +730,45 @@ function update() {
         });
     
 
-        // Kiểm tra nếu quả bom đã đi quá 200px
         if (Math.abs(bombX - player.x) > 500) {
             bombThrown = false;
+        }
+    }
+
+    if (mcThrown) {
+        if (mcDirection === 'left') {
+            mcX -= mcSpeed;
+        } else {
+            mcX += mcSpeed;
+        }
+
+        enemies.forEach((enemy, index) => {
+            if (Math.abs(mcX - enemy.x) < ENEMY_SIZE && Math.abs(mcY - enemy.y) < ENEMY_SIZE) {
+                mcThrown = false;
+                enemies.splice(index, 2);
+                score += 1000;
+    
+                // Tạo một phần tử img mới cho hiệu ứng nổ
+                const explosionImg = document.createElement('img');
+                explosionImg.src = 'bomno.gif';
+                explosionImg.style.position = 'absolute';
+                explosionImg.style.left = (mcX - PLAYER_SIZE) + 'px';
+                explosionImg.style.top = (mcY - PLAYER_SIZE) + 'px';
+                explosionImg.style.width = (PLAYER_SIZE * 3) + 'px';
+                explosionImg.style.height = (PLAYER_SIZE * 3) + 'px';
+                document.body.appendChild(explosionImg);
+    
+                // Xóa hình ảnh hiệu ứng nổ sau một khoảng thời gian nhất định
+                setTimeout(function() {
+                    document.body.removeChild(explosionImg);
+                }, 800); // Thời gian hiển thị hiệu ứng nổ (ms)
+            }
+        });
+    
+
+        // Kiểm tra nếu quả bom đã đi quá 200px
+        if (Math.abs(mcX - player.x) > 500) {
+            mcThrown = false;
         }
     }
     // Cập nhật vị trí của "mapforss.jpg"
@@ -1300,6 +1351,9 @@ function draw() {
     if (chidoriThrown) {
         ctx.drawImage(chidoriImage, chidoriX, chidoriY, PLAYER_SIZE, PLAYER_SIZE);
     }
+    if (mcThrown) {
+        ctx.drawImage(mcImage, mcX, mcY, PLAYER_SIZE, PLAYER_SIZE);
+    }
     if (messiThrown) {
         ctx.drawImage(messiImage, messiX, messiY, PLAYER_SIZE, PLAYER_SIZE);
     }
@@ -1410,6 +1464,11 @@ function resetGame() {
     loliX = 0;
     loliY = 0;
     loliDirection = '';
+
+    mcThrown = false;
+    mcX = 0;
+    mcY = 0;
+    mcDirection = '';
 
     shitThrown = false;
     shitX = 0;
